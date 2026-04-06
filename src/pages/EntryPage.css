@@ -191,3 +191,29 @@
   .columns-grid { grid-template-columns: 1fr; }
   .team-summary-grid { grid-template-columns: 1fr; }
 }
+/* ── Golfer tooltip ───────────────────────── */
+.golfer-info-icon {
+  margin-left: auto;
+  padding-left: 8px;
+  font-size: 11px;
+  color: var(--muted);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.golfer-row:hover .golfer-info-icon {
+  opacity: 1;
+}
+
+.golfer-tooltip {
+  background: #1c1c1e;
+  color: #f0f0f0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.6;
+  max-width: 240px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
