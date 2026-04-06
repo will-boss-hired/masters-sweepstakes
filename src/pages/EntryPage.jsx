@@ -15,6 +15,7 @@ export default function EntryPage() {
   const [locked, setLocked] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [tooltip, setTooltip] = useState(null)
 
   useEffect(() => { init() }, [])
 
@@ -44,6 +45,16 @@ export default function EntryPage() {
     const next = [...picks]
     next[ci] = { columnIndex: ci, columnName: COLUMNS[ci].name, ...golfer }
     setPicks(next)
+  }
+
+  function handleMouseEnter(e, golfer) {
+    if (!golfer.fact) return
+    const rect = e.currentTarget.getBoundingClientRect()
+    setTooltip({ fact: golfer.fact, x: rect.right + 10, y: rect.top })
+  }
+
+  function handleMouseLeave() {
+    setTooltip(null)
   }
 
   const allPicked = picks.every(p => p !== null)
@@ -189,15 +200,34 @@ export default function EntryPage() {
                   key={gi}
                   className={`golfer-row ${picks[ci]?.name === golfer.name ? 'selected' : ''}`}
                   onClick={() => selectGolfer(ci, golfer)}
+                  onMouseEnter={e => handleMouseEnter(e, golfer)}
+                  onMouseLeave={handleMouseLeave}
                 >
                   <span className="golfer-name">{golfer.name}</span>
                   <span className="golfer-odds">{golfer.odds}</span>
+                  {golfer.fact && (
+                    <span className="golfer-info-icon">ℹ</span>
+                  )}
                 </div>
               ))}
             </div>
           </div>
         ))}
       </div>
+
+      {tooltip && (
+        <div
+          className="golfer-tooltip"
+          style={{
+            position: 'fixed',
+            left: tooltip.x,
+            top: tooltip.y,
+            zIndex: 1000,
+          }}
+        >
+          {tooltip.fact}
+        </div>
+      )}
 
       <div className="team-summary">
         <p className="team-summary-title">Your team</p>
