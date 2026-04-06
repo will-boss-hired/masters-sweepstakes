@@ -121,3 +121,4 @@ export const COLS = [
     ]
   }
 ]
+export const COLUMNS = COLS
