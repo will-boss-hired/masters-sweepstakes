@@ -23,7 +23,7 @@ export default function EntryPage() {
     setLoading(true)
     try {
       const { data: setting } = await supabase
-        .from('settings').select('value').eq('key', 'locked').single()
+        .from('settings').select('value').eq('key', 'locked').maybeSingle()
       if (setting?.value === 'true') { setLocked(true); setLoading(false); return }
 
       const token = localStorage.getItem(STORAGE_KEY)
