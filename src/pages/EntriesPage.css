@@ -1,0 +1,79 @@
+.entries-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+}
+
+.entry-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.entry-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.entry-number {
+  font-size: 11px;
+  color: var(--subtle);
+  min-width: 24px;
+}
+
+.entry-name {
+  font-size: 15px;
+  font-weight: 500;
+  flex: 1;
+  font-family: 'EB Garamond', serif;
+}
+
+.entry-card-picks {
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.entry-card-pick {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.entry-card-pick-bar {
+  width: 3px;
+  height: 32px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.entry-card-pick-col {
+  font-size: 10px;
+  color: var(--subtle);
+  margin-bottom: 1px;
+}
+
+.entry-card-pick-name {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.entry-card-pick-odds {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--subtle);
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .entries-grid {
+    grid-template-columns: 1fr;
+  }
+}

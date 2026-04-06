@@ -1,0 +1,159 @@
+.admin-login {
+  max-width: 360px;
+  margin: 4rem auto;
+  text-align: center;
+}
+
+.admin-login h2 {
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+
+.admin-login p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 1.5rem;
+}
+
+.admin-login form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── Settings panel ── */
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.setting-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.setting-info p:first-child {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.setting-info p:last-child {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ── Entries table ── */
+.entries-table-wrap {
+  overflow-x: auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.entries-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 640px;
+}
+
+.entries-table th {
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  white-space: nowrap;
+}
+
+.entries-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.entries-table tr:last-child td {
+  border-bottom: none;
+}
+
+.entries-table tr:hover td {
+  background: var(--bg);
+}
+
+.entry-picks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.entry-pick-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.entry-pick-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.entry-pick-col {
+  color: var(--muted);
+  min-width: 80px;
+  font-size: 10px;
+}
+
+.entry-pick-name {
+  color: var(--text);
+}
+
+.paid-toggle-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.paid-label {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.paid-label.yes {
+  color: var(--green);
+  font-weight: 500;
+}
+
+.admin-section-title {
+  font-size: 17px;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.logout-btn {
+  font-size: 12px;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  text-decoration: underline;
+}
+
+.logout-btn:hover { color: var(--text); }

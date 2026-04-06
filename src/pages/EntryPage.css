@@ -1,0 +1,193 @@
+.entry-topbar {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.progress-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: 10px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ddd;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.dot.on { background: var(--green); }
+
+.progress-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-left: 4px;
+}
+
+/* ── Column grid ── */
+.columns-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 1.25rem;
+}
+
+.column-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--card);
+}
+
+.column-header {
+  padding: 9px 11px 8px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  border-top: 3px solid #ccc;
+}
+
+.column-name {
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.column-pick-label {
+  font-size: 10px;
+  color: var(--subtle);
+  text-align: center;
+  margin-top: 2px;
+  height: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.column-pick-label.chosen { color: var(--green); }
+
+.column-body {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.golfer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+
+.golfer-row:last-child { border-bottom: none; }
+.golfer-row:hover { background: var(--bg); }
+.golfer-row.selected { background: var(--green-pale); }
+
+.golfer-name { font-size: 11px; color: var(--text); }
+.golfer-row.selected .golfer-name { color: var(--green); font-weight: 500; }
+
+.golfer-odds { font-size: 10px; color: var(--subtle); flex-shrink: 0; margin-left: 4px; }
+.golfer-row.selected .golfer-odds { color: var(--green); }
+
+/* ── Team summary ── */
+.team-summary {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 1rem;
+}
+
+.team-summary-title {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+.team-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.team-pick {
+  border-left: 2px solid var(--border);
+  padding-left: 8px;
+  transition: border-color 0.2s;
+}
+
+.team-pick.filled { border-left-color: var(--green); }
+
+.team-pick-col {
+  font-size: 10px;
+  color: var(--subtle);
+  margin-bottom: 2px;
+}
+
+.team-pick-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.team-pick-name.empty {
+  color: var(--subtle);
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* ── Submit row ── */
+.submit-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* ── Picks summary (success screen) ── */
+.picks-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.picks-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.picks-summary-col {
+  font-size: 11px;
+  color: var(--muted);
+  border-left: 2px solid #ccc;
+  padding-left: 7px;
+  min-width: 140px;
+}
+
+.picks-summary-name { color: var(--text); font-weight: 500; flex: 1; }
+.picks-summary-odds { color: var(--subtle); font-size: 11px; }
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .columns-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .team-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 480px) {
+  .columns-grid { grid-template-columns: 1fr; }
+  .team-summary-grid { grid-template-columns: 1fr; }
+}
