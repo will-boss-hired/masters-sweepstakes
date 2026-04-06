@@ -1,20 +1,105 @@
 export const COLUMNS = [
   { index:0, name:"The Favourites", color:"#378ADD", golfers:[
-    {name:"Scottie Scheffler",odds:"5/1"},{name:"Bryson DeChambeau",odds:"10/1"},{name:"Jon Rahm",odds:"10/1"},{name:"Rory McIlroy",odds:"12/1"},{name:"Xander Schauffele",odds:"16/1"},{name:"Ludvig Åberg",odds:"16/1"},{name:"Matt Fitzpatrick",odds:"22/1"},{name:"Cameron Young",odds:"22/1"},{name:"Tommy Fleetwood",odds:"22/1"},{name:"Justin Rose",odds:"30/1"},{name:"Robert MacIntyre",odds:"33/1"},{name:"Patrick Reed",odds:"33/1"},{name:"Collin Morikawa",odds:"35/1"},{name:"Hideki Matsuyama",odds:"40/1"},{name:"Jordan Spieth",odds:"40/1"}
+    {name:"Scottie Scheffler",odds:"5/1",fact:"World No.1 and two-time Masters champion (2022 & 2024). He's so dominant right now that bookies have basically given up pretending anyone else will win."},
+    {name:"Bryson DeChambeau",odds:"10/1",fact:"The mad scientist of golf. Bulked up, switched to LIV, won the 2024 US Open, and hits the ball so hard that Augusta's designers are losing sleep."},
+    {name:"Jon Rahm",odds:"10/1",fact:"Reigning Masters champion (2023) turned LIV rebel. The fiery Spaniard has unfinished business at Augusta and the game to back it up."},
+    {name:"Rory McIlroy",odds:"12/1",fact:"Needs only the Masters to complete the career Grand Slam. He's been chasing that green jacket for over a decade. No pressure, Rory."},
+    {name:"Xander Schauffele",odds:"16/1",fact:"Won both the Open Championship and the PGA Championship in 2024. Once known as the best player never to win a major — that ship has very much sailed."},
+    {name:"Ludvig Åberg",odds:"16/1",fact:"The 6'4\" Swede finished runner-up on his Masters debut in 2024. Calm, long, and terrifyingly good for someone who's been on tour five minutes."},
+    {name:"Matt Fitzpatrick",odds:"22/1",fact:"2022 US Open champion and proud Sheffielder. Compact swing, massive heart, and will absolutely stare down a leaderboard without flinching."},
+    {name:"Cameron Young",odds:"22/1",fact:"One of the longest hitters on tour with a silky short game to match. Has flirted with major glory — Augusta could be where it all clicks."},
+    {name:"Tommy Fleetwood",odds:"22/1",fact:"The man with the best hair in golf and a game to match. The Englishman has come agonisingly close at majors before and Augusta sets up perfectly for him."},
+    {name:"Justin Rose",odds:"30/1",fact:"2013 US Open champion, former world No.1, and a man who famously holed out on his first shot as a professional. Something of a Augusta specialist too."},
+    {name:"Robert MacIntyre",odds:"33/1",fact:"Proud Scotsman who dedicated his 2024 Canadian Open win to his dad on the bag. Augusta's undulating fairways suit his left-to-right ball flight perfectly."},
+    {name:"Patrick Reed",odds:"33/1",fact:"2018 Masters champion nicknamed 'Captain America' — though not everyone's a fan. Plays with a chip on his shoulder the size of a sand wedge."},
+    {name:"Collin Morikawa",odds:"35/1",fact:"Two-time major winner with one of the most precise iron games in the world. Rarely makes mistakes, which at Augusta is basically a superpower."},
+    {name:"Hideki Matsuyama",odds:"40/1",fact:"Made history as the first Japanese man to win a major when he claimed the 2021 Masters. Returns every year knowing exactly what it takes to get the job done."},
+    {name:"Jordan Spieth",odds:"40/1",fact:"Won the Masters in 2015 by a record margin. Also holds the record for most dramatic collapse at Augusta (2016, hole 12, we don't talk about it)."}
   ]},
   { index:1, name:"The Could Do's", color:"#BA7517", golfers:[
-    {name:"Brooks Koepka",odds:"40/1"},{name:"Min Woo Lee",odds:"40/1"},{name:"Si Woo Kim",odds:"45/1"},{name:"Chris Gotterup",odds:"50/1"},{name:"Viktor Hovland",odds:"50/1"},{name:"Russell Henley",odds:"55/1"},{name:"Shane Lowry",odds:"60/1"},{name:"Akshay Bhatia",odds:"60/1"},{name:"Adam Scott",odds:"65/1"},{name:"Justin Thomas",odds:"65/1"},{name:"Sepp Straka",odds:"70/1"},{name:"Tyrrell Hatton",odds:"70/1"},{name:"Patrick Cantlay",odds:"70/1"},{name:"Jason Day",odds:"70/1"},{name:"Jake Knapp",odds:"80/1"}
+    {name:"Brooks Koepka",odds:"40/1",fact:"Five major championships and absolutely zero interest in playing any other kind of golf. Goes up a gear when the pressure goes up — classic major animal."},
+    {name:"Min Woo Lee",odds:"40/1",fact:"The showman Australian with flair to burn. His sister Minjee is also a professional golfer. Between them, the Lee family are basically a golfing dynasty."},
+    {name:"Si Woo Kim",odds:"45/1",fact:"Won the 2017 Players Championship aged just 21, making him the youngest ever winner. A quiet, steady Korean who can go very low very quietly."},
+    {name:"Chris Gotterup",odds:"50/1",fact:"Big-hitting American who played college golf at Oklahoma. He's been knocking on the door on the PGA Tour and Augusta could be where it swings open."},
+    {name:"Viktor Hovland",odds:"50/1",fact:"The Norwegian sensation who won the 2023 Tour Championship. His short game has been a work in progress but when it clicks he's virtually unstoppable."},
+    {name:"Russell Henley",odds:"55/1",fact:"Three-time PGA Tour winner who flies under the radar but consistently contends. The kind of player who could quietly post 68-67-66 before anyone notices."},
+    {name:"Shane Lowry",odds:"60/1",fact:"2019 Open Championship winner and Ireland's most beloved golfer since Pádraig Harrington. His Augusta record is solid and he's the perfect 'why not?' pick."},
+    {name:"Akshay Bhatia",odds:"60/1",fact:"Dropped out of high school to turn professional at 17. Now in his early 20s and collecting PGA Tour wins. The next big thing, possibly right now."},
+    {name:"Adam Scott",odds:"65/1",fact:"2013 Masters champion and possibly the most elegant swing in professional golf. At 44, he still hits it purer than men half his age."},
+    {name:"Justin Thomas",odds:"65/1",fact:"Two-time major winner and one of the most competitive players alive. JT channels his frustration on the course into birdies — of which there are many."},
+    {name:"Sepp Straka",odds:"70/1",fact:"Austrian-born, Georgia-raised, and quietly becoming one of the most consistent players on tour. Local knowledge from his university days in Athens, GA, can't hurt."},
+    {name:"Tyrrell Hatton",odds:"70/1",fact:"The most entertainingly grumpy man in professional golf. Argues with himself, argues with the wind, argues with the hole — and still shoots under par."},
+    {name:"Patrick Cantlay",odds:"70/1",fact:"Known as 'Patty Ice' for his unflappable temperament. Won the 2021 FedEx Cup and thrives when the pressure is highest. A slow play merchant but a serious contender."},
+    {name:"Jason Day",odds:"70/1",fact:"Former world No.1 and 2015 PGA Championship winner. The Australian has rebuilt his game beautifully and looked sharp heading into the season."},
+    {name:"Jake Knapp",odds:"80/1",fact:"The Californian is one of the rising stars on tour after breaking through with his first PGA Tour win in 2024. Long, athletic, and not afraid of the moment."}
   ]},
   { index:2, name:"The Possible's", color:"#1D9E75", golfers:[
-    {name:"Jacob Bridgeman",odds:"80/1"},{name:"Marco Penge",odds:"80/1"},{name:"Sungjae Im",odds:"100/1"},{name:"Sam Burns",odds:"100/1"},{name:"Harris English",odds:"100/1"},{name:"Corey Conners",odds:"100/1"},{name:"J.J. Spaun",odds:"100/1"},{name:"Cameron Smith",odds:"100/1"},{name:"Nicolai Højgaard",odds:"100/1"},{name:"Maverick McNealy",odds:"100/1"},{name:"Gary Woodland",odds:"100/1"},{name:"Max Homa",odds:"100/1"},{name:"Daniel Berger",odds:"125/1"},{name:"Ben Griffin",odds:"125/1"},{name:"Rasmus Højgaard",odds:"150/1"},{name:"Kurt Kitayama",odds:"150/1"}
+    {name:"Jacob Bridgeman",odds:"80/1",fact:"Young American who turned heads on the Korn Ferry Tour before making his mark on the PGA Tour. Augusta is a big stage — but he's shown he doesn't scare easily."},
+    {name:"Marco Penge",odds:"80/1",fact:"The Essex-born DP World Tour star is one of Britain's most exciting young prospects. Augusta is his first Masters and he'll be soaking up every second."},
+    {name:"Sungjae Im",odds:"100/1",fact:"The South Korean machine who plays almost every week and never seems to get tired. Finished runner-up at the 2020 Masters — Augusta clearly suits his game."},
+    {name:"Sam Burns",odds:"100/1",fact:"Five PGA Tour wins and counting. The Louisiana native is a fierce competitor who loves a links-style course — and Augusta's fast greens suit his touch."},
+    {name:"Harris English",odds:"100/1",fact:"A two-time PGA Tour winner who has quietly built one of the most consistent records on tour. Easy to overlook, hard to shake off a leaderboard."},
+    {name:"Corey Conners",odds:"100/1",fact:"The Canadian is one of the straightest drivers in golf — a massive advantage at Augusta where missing the fairway is basically a bogey waiting to happen."},
+    {name:"J.J. Spaun",odds:"100/1",fact:"Won the 2022 Texas Open and has been steadily improving ever since. A grinder who makes the most of his game — exactly the type to sneak into contention."},
+    {name:"Cameron Smith",odds:"100/1",fact:"2022 Open Championship winner with the most iconic mullet in sport. Switched to LIV but his putting remains world-class — deadly on Augusta's slick greens."},
+    {name:"Nicolai Højgaard",odds:"100/1",fact:"One half of Denmark's Højgaard twins. The younger sibling won on the DP World Tour in style and is quietly developing into a serious major contender."},
+    {name:"Maverick McNealy",odds:"100/1",fact:"Stanford graduate with the game to match the education. A sleek, consistent ball-striker who is long overdue a breakthrough win — could it be here?"},
+    {name:"Gary Woodland",odds:"100/1",fact:"2019 US Open champion who hit some of the most stunning shots ever seen in a major. His power game can overpower any course when he's on."},
+    {name:"Max Homa",odds:"100/1",fact:"Six PGA Tour wins and a Twitter/X account that is genuinely funnier than most professional comedians. A proper player who is quietly elite."},
+    {name:"Daniel Berger",odds:"125/1",fact:"Former top-10 world ranked player who has battled injury but is returning to form. When healthy, he's a serious ball-striker who can compete anywhere."},
+    {name:"Ben Griffin",odds:"125/1",fact:"The North Carolina native is one of the most improved players on tour. Quietly building a solid game that could make noise in the right conditions."},
+    {name:"Rasmus Højgaard",odds:"150/1",fact:"The other Højgaard twin and arguably the more naturally gifted of the two. Won the 2023 Italian Open and has the game to make the cut and then some."},
+    {name:"Kurt Kitayama",odds:"150/1",fact:"Won his first PGA Tour title at the 2023 Arnold Palmer Invitational in dramatic fashion. Cool under pressure and a proper threat on tracks that suit his eye."}
   ]},
   { index:3, name:"The Bubble (Cut?)", color:"#888780", golfers:[
-    {name:"Aaron Rai",odds:"150/1"},{name:"Wyndham Clark",odds:"150/1"},{name:"Ryan Gerard",odds:"150/1"},{name:"Brian Harman",odds:"150/1"},{name:"Sam Stevens",odds:"175/1"},{name:"Max Greyserman",odds:"175/1"},{name:"Ryan Fox",odds:"175/1"},{name:"Jarvis Casey",odds:"175/1"},{name:"Keegan Bradley",odds:"175/1"},{name:"Haotong Li",odds:"175/1"},{name:"Dustin Johnson",odds:"175/1"},{name:"Alex Noren",odds:"175/1"},{name:"Harry Hall",odds:"175/1"},{name:"Nicolas Echavarria",odds:"175/1"},{name:"Sami Valimaki",odds:"225/1"}
+    {name:"Aaron Rai",odds:"150/1",fact:"The British Ryder Cup player has one of the most recognisable swings on tour — a wide, flat take-away that works far better than it looks. Steady Eddie."},
+    {name:"Wyndham Clark",odds:"150/1",fact:"2023 US Open champion who beat Rory McIlroy in a thriller at Los Angeles CC. Fist-pumping and fired up — Augusta is a big ask but he's a proven closer."},
+    {name:"Ryan Gerard",odds:"175/1",fact:"The young American is building his PGA Tour career steadily. Still searching for his first win but the talent is clearly there for all to see."},
+    {name:"Brian Harman",odds:"175/1",fact:"Won the 2023 Open Championship at Hoylake by a staggering six shots. The tiny Georgian with the massive game — often overlooked, occasionally brilliant."},
+    {name:"Sam Stevens",odds:"175/1",fact:"One of the newer faces on the PGA Tour who has made a solid start to life at the top level. Augusta is a debut to remember — if he can make the cut."},
+    {name:"Max Greyserman",odds:"175/1",fact:"A Korn Ferry Tour graduate making his way on the main tour. Has shown flashes of brilliance and will be desperate to make an impression on golf's biggest stage."},
+    {name:"Ryan Fox",odds:"175/1",fact:"The big-hitting New Zealander and son of rugby legend Grant Fox. His length off the tee is a serious weapon — whether the short game holds up is the question."},
+    {name:"Jarvis Casey",odds:"175/1",fact:"An amateur or emerging professional taking his shot at Augusta National. Every golfer dreams of playing here — he'll be living that dream this week."},
+    {name:"Keegan Bradley",odds:"175/1",fact:"2011 PGA Championship winner and now US Ryder Cup captain. Hugely experienced at the biggest occasions — and Augusta has seen stranger things than a Bradley charge."},
+    {name:"Haotong Li",odds:"175/1",fact:"The Chinese star came third at the 2017 Open Championship and has been a consistent performer on the DP World Tour. A silky ball-striker on his day."},
+    {name:"Dustin Johnson",odds:"175/1",fact:"2020 Masters champion who won by a record 20-under par. Now on LIV, his competitive edge is harder to read — but he's a former champion here and that counts."},
+    {name:"Alex Noren",odds:"175/1",fact:"The Swede is one of the most consistent ball-strikers in European golf. Has quietly compiled a brilliant career and Augusta always rewards ball-striking."},
+    {name:"Harry Hall",odds:"175/1",fact:"The English DP World Tour pro has had a steady rise through the ranks. Augusta is a first Masters experience — and first times here are rarely forgotten."},
+    {name:"Nicolas Echavarria",odds:"175/1",fact:"The Colombian star won his first PGA Tour event in 2023 and has been growing in confidence ever since. A long hitter with plenty of upside."},
+    {name:"Sami Valimaki",odds:"225/1",fact:"The Finnish DP World Tour winner is one of Scandinavia's best young players. Used to cold-weather golf — Augusta's warmth might be the biggest surprise."}
   ]},
   { index:4, name:"The Miracles", color:"#3B6D11", golfers:[
-    {name:"Nick Taylor",odds:"225/1"},{name:"Sergio Garcia",odds:"225/1"},{name:"Carlos Ortiz",odds:"225/1"},{name:"Kristoffer Reitan",odds:"250/1"},{name:"Matt McCarty",odds:"250/1"},{name:"Rasmus Neergaard-Petersen",odds:"250/1"},{name:"Andrew Novak",odds:"250/1"},{name:"Aldrich Potgieter",odds:"250/1"},{name:"Tom McKibbin",odds:"250/1"},{name:"Michael Brennan",odds:"350/1"},{name:"Michael Kim",odds:"350/1"},{name:"Davis Riley",odds:"500/1"},{name:"Bubba Watson",odds:"500/1"},{name:"John Keefer",odds:"500/1"},{name:"Zach Johnson",odds:"500/1"}
+    {name:"Nick Taylor",odds:"225/1",fact:"The Canadian hero who holed one of the most dramatic putts in Ryder Cup history in 2023. A proper fighter who you'd never want to write off."},
+    {name:"Sergio Garcia",odds:"225/1",fact:"2017 Masters champion in one of the most popular wins in recent memory. The Spaniard is now on LIV — but Augusta holds a very special place in his heart."},
+    {name:"Carlos Ortiz",odds:"225/1",fact:"Mexico's leading professional golfer and a man capable of lighting up a leaderboard. His best golf would be more than enough to make the cut."},
+    {name:"Kristoffer Reitan",odds:"250/1",fact:"Norwegian youngster who has been steadily building his game on the European circuit. Augusta is a new frontier — he'll be embracing every shot."},
+    {name:"Matt McCarty",odds:"250/1",fact:"An American pro who secured his card on the PGA Tour and is making the most of his opportunities. Hard-working and hungry for a big week."},
+    {name:"Rasmus Neergaard-Petersen",odds:"250/1",fact:"Danish DP World Tour player with one of the longest names on the leaderboard. His drives won't be quite as long but he's a serious golfer in his own right."},
+    {name:"Andrew Novak",odds:"250/1",fact:"A journeyman pro who has worked hard for everything he's earned. You sense he'll treat Augusta National with the reverence it deserves — and enjoy every moment."},
+    {name:"Aldrich Potgieter",odds:"250/1",fact:"The South African teenager turned professional at 17 and immediately started bombing it 340+ yards. The most exciting long-shot in the field — genuinely."},
+    {name:"Tom McKibbin",odds:"250/1",fact:"Northern Irish prodigy who trained at the same academy as Rory McIlroy. Still just 22, he's tipped for the very top — Augusta might just be the beginning."},
+    {name:"Michael Brennan",odds:"350/1",fact:"American amateur or emerging tour player taking his shot at the big time. Whatever happens, Masters week is a story he'll be telling for the rest of his life."},
+    {name:"Michael Kim",odds:"350/1",fact:"Won the 2018 John Deere Classic by a record eight shots — then went quiet. Has been rebuilding his game and a Masters start is proof the comeback is real."},
+    {name:"Davis Riley",odds:"500/1",fact:"The Alabama native is a solid PGA Tour professional building his record steadily. A big week at Augusta would be a genuine career-changer."},
+    {name:"Bubba Watson",odds:"500/1",fact:"Two-time Masters champion (2012, 2014) who hit the most famous hook in golf history to win his first green jacket. Now 46 and on LIV — but he's done it here before."},
+    {name:"John Keefer",odds:"500/1",fact:"Taking his place in the Masters field and determined to make it count. Augusta has a habit of producing stories — and Keefer will be hoping to be one of them."},
+    {name:"Zach Johnson",odds:"500/1",fact:"Two-time major champion (2007 Masters, 2015 Open) and former US Ryder Cup captain. At 48, he's not expected to contend — but stranger things have happened at Augusta."}
   ]},
   { index:5, name:"The No Chancers", color:"#7F77DD", golfers:[
-    {name:"Charl Schwartzel",odds:"750/1"},{name:"Angel Cabrera",odds:"1000/1"},{name:"Mason Howell",odds:"1000/1"},{name:"Fifa Laopakdee",odds:"1000/1"},{name:"Ethan Fang",odds:"1000/1"},{name:"Brian Campbell",odds:"1000/1"},{name:"Vijay Singh",odds:"1000/1"},{name:"Jose Maria Olazabal",odds:"1000/1"},{name:"Brandon Holtz",odds:"1000/1"},{name:"Naoyuki Kataoka",odds:"1000/1"},{name:"Danny Willett",odds:"1000/1"},{name:"Jackson Herrington",odds:"1000/1"},{name:"Fred Couples",odds:"1000/1"},{name:"Mateo Pulcini",odds:"1000/1"},{name:"Mike Weir",odds:"1000/1"}
+    {name:"Charl Schwartzel",odds:"750/1",fact:"Won the 2011 Masters by birdieing the last four holes in the most dramatic fashion. The South African legend is back — mostly for the memories."},
+    {name:"Angel Cabrera",odds:"1000/1",fact:"2009 Masters champion who missed several years due to legal troubles. His return to Augusta is one of golf's most complicated storylines."},
+    {name:"Mason Howell",odds:"1000/1",fact:"Amateur golfer who has earned his spot at Augusta the hard way. A once-in-a-lifetime experience — and whatever he shoots, he'll dine out on this forever."},
+    {name:"Fifa Laopakdee",odds:"1000/1",fact:"Thai amateur who qualifies via Asia-Pacific amateur status. Will become one of the few Thai golfers ever to tee it up at Augusta National. History maker."},
+    {name:"Ethan Fang",odds:"1000/1",fact:"Young American amateur who has the talent to develop into a serious professional. Augusta is an education that money genuinely cannot buy."},
+    {name:"Brian Campbell",odds:"1000/1",fact:"Has earned his Masters invitation through the amateur or qualifying route. Will walk Augusta's fairways with wide eyes and a story that lasts a lifetime."},
+    {name:"Vijay Singh",odds:"1000/1",fact:"Three-time major champion including the 2000 Masters. The Fijian legend is in his early 60s but Augusta always invites past champions — and Vijay always shows up."},
+    {name:"Jose Maria Olazabal",odds:"1000/1",fact:"Two-time Masters champion (1994, 1999) and one of Augusta's most beloved figures. Now an honorary starter — his participation is pure celebration of the game."},
+    {name:"Brandon Holtz",odds:"1000/1",fact:"Making his Masters debut and will relish every single moment. Whatever happens on the scorecard, playing Augusta National is a bucket list moment like no other."},
+    {name:"Naoyuki Kataoka",odds:"1000/1",fact:"Japanese veteran competing in the Masters via past champion or special invitation. Brings experience and perspective that only a lifetime in professional golf can give you."},
+    {name:"Danny Willett",odds:"1000/1",fact:"Won the 2016 Masters after Jordan Spieth's famous meltdown on the back nine. The Yorkshireman is back — and still the answer to a very good pub quiz question."},
+    {name:"Jackson Herrington",odds:"1000/1",fact:"Amateur golfer living out the dream at Augusta National. His scorecard might be rough but the experience is priceless — and the stories will last forever."},
+    {name:"Fred Couples",odds:"1000/1",fact:"Won the 1992 Masters and is synonymous with Augusta, where his ball famously stayed up on the 12th bank in the final round. Now an honorary starter — a true legend."},
+    {name:"Mateo Pulcini",odds:"1000/1",fact:"International amateur or emerging professional making the most of a Masters invitation. Golf history is being made just by being here — and he knows it."},
+    {name:"Mike Weir",odds:"1000/1",fact:"Canada's greatest golfer won the 2003 Masters in a playoff. The left-hander returns as a past champion — Augusta always rolls out the green jacket for its alumni."}
   ]}
 ]
