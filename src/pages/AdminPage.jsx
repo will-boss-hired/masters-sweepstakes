@@ -10,7 +10,7 @@ export default function AdminPage() {
   const [password, setPassword] = useState('')
   const [authError, setAuthError] = useState(false)
   const [entries, setEntries] = useState([])
-  const [settings, setSettings] = useState({ locked: false, entries_visible: false })
+  const [settings, setSettings] = useState({ locked: false, picks_visible: false })
   const [loading, setLoading] = useState(true)
   const [togglingId, setTogglingId] = useState(null)
 
@@ -51,7 +51,7 @@ export default function AdminPage() {
     setSettings(prev => ({ ...prev, [key]: newVal }))
     await supabase
       .from('settings')
-      .update({ value: String(newVal), updated_at: new Date().toISOString() })
+      .update({ value: String(newVal) })
       .eq('key', key)
   }
 
@@ -156,14 +156,14 @@ export default function AdminPage() {
         <div className="setting-card">
           <div className="setting-info">
             <p>Show entries publicly</p>
-            <p>{settings.entries_visible ? 'All picks are visible to everyone.' : 'Picks are hidden from the public.'}</p>
+            <p>{settings.picks_visible ? 'All picks are visible to everyone.' : 'Picks are hidden from the public.'}</p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <input
               type="checkbox"
               className="toggle"
-              checked={settings.entries_visible}
-              onChange={() => toggleSetting('entries_visible')}
+              checked={settings.picks_visible}
+              onChange={() => toggleSetting('picks_visible')}
             />
           </div>
         </div>
