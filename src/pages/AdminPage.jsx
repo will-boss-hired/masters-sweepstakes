@@ -55,11 +55,14 @@ export default function AdminPage() {
       .eq('key', key)
   }
 
-  async function togglePaid(entry) {
+async function togglePaid(entry) {
     setTogglingId(entry.id)
     const newVal = !entry.paid
-    await supabase.from('entries').update({ paid: newVal }).eq('id', entry.id)
-    setEntries(prev => prev.map(e => e.id === entry.id ? { ...e, paid: newVal } : e))
+    const { data, error } = await supabase.from('entries').update({ paid: newVal }).eq('id', entry.id)
+    console.log('Update result:', { data, error, id: entry.id, newVal })
+    if (!error) {
+      setEntries(prev => prev.map(e => e.id === entry.id ? { ...e, paid: newVal } : e))
+    }
     setTogglingId(null)
   }
 
