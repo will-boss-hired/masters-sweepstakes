@@ -2,24 +2,20 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { COLUMNS } from '../lib/golfers'
 import './EntriesPage.css'
-
 export default function EntriesPage() {
   const [entries, setEntries] = useState([])
   const [visible, setVisible] = useState(false)
   const [locked, setLocked] = useState(false)
   const [loading, setLoading] = useState(true)
-
   useEffect(() => { loadData() }, [])
-
   async function loadData() {
     setLoading(true)
     const { data: settingsData } = await supabase.from('settings').select('*')
     const map = {}
     settingsData?.forEach(s => { map[s.key] = s.value })
-    setVisible(map.entries_visible === 'true')
+    setVisible(map.picks_visible === 'true')
     setLocked(map.locked === 'true')
-
-    if (map.entries_visible === 'true') {
+    if (map.picks_visible === 'true') {
       const { data } = await supabase
         .from('entries')
         .select('*')
@@ -28,9 +24,7 @@ export default function EntriesPage() {
     }
     setLoading(false)
   }
-
   if (loading) return <div className="loading">Loading...</div>
-
   if (!visible) return (
     <div>
       <h1 className="page-title">All entries</h1>
@@ -42,7 +36,6 @@ export default function EntriesPage() {
       </div>
     </div>
   )
-
   return (
     <div>
       <h1 className="page-title">All entries</h1>
@@ -50,7 +43,6 @@ export default function EntriesPage() {
         {entries.length} {entries.length === 1 ? 'entry' : 'entries'} · £{entries.length * 20} prize pool
         {locked ? ' · Entries are closed.' : ' · Entries still open.'}
       </p>
-
       {entries.length === 0 ? (
         <div className="empty">
           <h3>No entries yet</h3>
@@ -63,7 +55,7 @@ export default function EntriesPage() {
               <div className="entry-card-header">
                 <div className="entry-number">#{idx + 1}</div>
                 <div className="entry-name">{entry.entrant_name}</div>
-                {entry.paid && <span className="badge badge-green">Paid</span>}
+                {entry.is_paid && <span className="badge badge-green">Paid</span>}
               </div>
               <div className="entry-card-picks">
                 {entry.picks.map((pick, i) => (
