@@ -55,10 +55,10 @@ export default function AdminPage() {
       .eq('key', key)
   }
 
-async function toggleis_is_paid(entry) {
+  async function togglePaid(entry) {
     setTogglingId(entry.id)
-    const newVal = !entry.is_is_paid
-    const { data, error } = await supabase.from('entries').update({ is_is_paid: newVal }).eq('id', entry.id)
+    const newVal = !entry.is_paid
+    const { data, error } = await supabase.from('entries').update({ is_paid: newVal }).eq('id', entry.id)
     console.log('Update result:', { data, error, id: entry.id, newVal })
     if (!error) {
       setEntries(prev => prev.map(e => e.id === entry.id ? { ...e, is_paid: newVal } : e))
@@ -74,7 +74,7 @@ async function toggleis_is_paid(entry) {
 
   // Stats
   const totalEntries = entries.length
-  const is_paidEntries = entries.filter(e => e.is_paid).length
+  const paidEntries = entries.filter(e => e.is_paid).length
   const prizePool = totalEntries * 20
   const prizes = {
     first: Math.round(prizePool * 0.70),
@@ -121,8 +121,8 @@ async function toggleis_is_paid(entry) {
           <p className="stat-value">{totalEntries}</p>
         </div>
         <div className="stat-card">
-          <p className="stat-label">is_paid</p>
-          <p className="stat-value">{is_paidEntries} / {totalEntries}</p>
+          <p className="stat-label">Paid</p>
+          <p className="stat-value">{paidEntries} / {totalEntries}</p>
         </div>
         <div className="stat-card">
           <p className="stat-label">Prize pool</p>
@@ -196,7 +196,7 @@ async function toggleis_is_paid(entry) {
                 <th>#</th>
                 <th>Name</th>
                 <th>Picks</th>
-                <th>is_paid</th>
+                <th>Paid</th>
                 <th>Submitted</th>
                 <th></th>
               </tr>
@@ -224,16 +224,16 @@ async function toggleis_is_paid(entry) {
                     </div>
                   </td>
                   <td>
-                    <div className="is_paid-toggle-cell">
+                    <div className="paid-toggle-cell">
                       <input
                         type="checkbox"
                         className="toggle"
                         checked={entry.is_paid}
-                        onChange={() => toggleis_paid(entry)}
+                        onChange={() => togglePaid(entry)}
                         disabled={togglingId === entry.id}
                       />
-                      <span className={`is_paid-label ${entry.is_paid ? 'yes' : ''}`}>
-                        {entry.is_paid ? 'is_paid' : 'Unis_paid'}
+                      <span className={`paid-label ${entry.is_paid ? 'yes' : ''}`}>
+                        {entry.is_paid ? 'Paid' : 'Unpaid'}
                       </span>
                     </div>
                   </td>
