@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { COLUMNS } from '../lib/golfers'
+import InsightsDashboard from '../components/InsightsDashboard'
 import './EntriesPage.css'
+
 export default function EntriesPage() {
   const [entries, setEntries] = useState([])
   const [visible, setVisible] = useState(false)
   const [locked, setLocked] = useState(false)
   const [loading, setLoading] = useState(true)
+
   useEffect(() => { loadData() }, [])
+
   async function loadData() {
     setLoading(true)
     const { data: settingsData } = await supabase.from('settings').select('*')
@@ -24,7 +28,9 @@ export default function EntriesPage() {
     }
     setLoading(false)
   }
+
   if (loading) return <div className="loading">Loading...</div>
+
   if (!visible) return (
     <div>
       <h1 className="page-title">All entries</h1>
@@ -36,6 +42,7 @@ export default function EntriesPage() {
       </div>
     </div>
   )
+
   return (
     <div>
       <h1 className="page-title">All entries</h1>
@@ -43,6 +50,9 @@ export default function EntriesPage() {
         {entries.length} {entries.length === 1 ? 'entry' : 'entries'} · £{entries.length * 20} prize pool
         {locked ? ' · Entries are closed.' : ' · Entries still open.'}
       </p>
+
+      {entries.length > 0 && <InsightsDashboard entries={entries} />}
+
       {entries.length === 0 ? (
         <div className="empty">
           <h3>No entries yet</h3>
