@@ -88,6 +88,37 @@
   margin: -0.5rem 0 0.75rem;
 }
 
+/* Notable / talking points */
+
+.notable-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+.notable-card {
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border, #ddd);
+  border-radius: 10px;
+  padding: 0.9rem 1.1rem;
+}
+
+.notable-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text, #333);
+  margin: 0 0 0.35rem;
+}
+
+.notable-body {
+  font-size: 0.8rem;
+  color: var(--muted, #888);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Bar chart */
+
 .bar-chart { display: flex; flex-direction: column; gap: 6px; }
 
 .bar-row {
@@ -132,6 +163,8 @@
   text-align: center;
   flex-shrink: 0;
 }
+
+/* Pot grid */
 
 .pot-grid {
   display: grid;
@@ -224,6 +257,8 @@
   flex-shrink: 0;
 }
 
+/* Heatmap */
+
 .heatmap-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -286,6 +321,8 @@
   border: 1px solid rgba(0,0,0,0.05);
 }
 
+/* Rogue picks */
+
 .rogue-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -319,9 +356,12 @@
   color: var(--text, #555);
 }
 
+/* Responsive */
+
 @media (max-width: 600px) {
   .bar-label { width: 100px; font-size: 0.7rem; }
   .spotlight-name { font-size: 1.3rem; }
   .pot-grid { grid-template-columns: 1fr; }
   .rogue-grid { grid-template-columns: 1fr 1fr; }
+  .notable-grid { grid-template-columns: 1fr; }
 }
