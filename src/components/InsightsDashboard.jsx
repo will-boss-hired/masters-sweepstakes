@@ -2,6 +2,41 @@ import { useMemo } from 'react'
 import { COLUMNS } from '../lib/golfers'
 import './InsightsDashboard.css'
 
+const NOTABLE_PICKS = [
+  {
+    title: 'Scheffler dominates the field',
+    body: '14 of 41 entries (34%) picked Scottie Scheffler as their Favourite. If he wins, over a third of the field share the top pick.',
+  },
+  {
+    title: 'Min Woo Lee is the consensus Could Do',
+    body: '12 entries (29%) backed Min Woo Lee. He\'s the most concentrated pick of the entire sweepstake.',
+  },
+  {
+    title: 'The No Chancer split',
+    body: 'Danny Willett (16 entries) vs Charl Schwartzel (14 entries) — 73% of the field picked one of these two. That\'s not chaos, that\'s groupthink.',
+  },
+  {
+    title: 'Angel Cabrera — Jim Oliver',
+    body: 'Jim Oliver backed Cabrera at 1000/1. He\'s currently serving an 8-year prison sentence. One of the more optimistic picks in the field.',
+  },
+  {
+    title: 'Vijay Singh — Loris & Will Lewis',
+    body: 'Singh is 62 years old. Last made the cut at Augusta a decade ago. Bold pick for the No Chancer slot — it\'s genuinely a no-chancer.',
+  },
+  {
+    title: 'Fred Couples — Dan Cotterall',
+    body: 'Fred Couples turns 67 this year. Playing on a special exemption. Dan Cotterall is playing it perfectly straight.',
+  },
+  {
+    title: 'Closest near-duplicate picks',
+    body: 'Guy Fisher and Charlie Dickens share 4 of 6 picks: Scheffler, Min Woo Lee, Corey Conners, Nick Taylor. Different only on Bubble and No Chancer.',
+  },
+  {
+    title: 'Rasmus Neergaard-Petersen — Loris',
+    body: 'The most obscure miracle pick in the field. Ranked outside the world\'s top 100. Loris either knows something or is absolutely winging it.',
+  },
+]
+
 export default function InsightsDashboard({ entries }) {
   const stats = useMemo(() => {
     if (!entries.length) return null
@@ -103,6 +138,18 @@ export default function InsightsDashboard({ entries }) {
         <div className="spotlight-stat">
           Picked by <strong>{mostPicked[1]}</strong> of {total} entries
           ({Math.round((mostPicked[1] / total) * 100)}%)
+        </div>
+      </div>
+
+      <div className="insights-section">
+        <h3 className="insights-section-title">Talking points</h3>
+        <div className="notable-grid">
+          {NOTABLE_PICKS.map((item, i) => (
+            <div key={i} className="notable-card">
+              <p className="notable-title">{item.title}</p>
+              <p className="notable-body">{item.body}</p>
+            </div>
+          ))}
         </div>
       </div>
 
