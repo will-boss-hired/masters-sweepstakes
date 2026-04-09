@@ -294,15 +294,22 @@ export default function LeaderboardPage() {
 
       {/* ── Event banner ─────────────────────────────── */}
       <div className="lb-banner">
-        <div>
+        <div className="lb-banner-logo-wrap">
+          <img
+            src="/masters-logo.png"
+            alt="The Masters"
+            className="lb-banner-logo"
+          />
+        </div>
+        <div className="lb-banner-center">
           <div className="lb-banner-title">
             {eventInfo?.name || 'Masters Tournament 2026'}
           </div>
           <div className="lb-banner-round">
-            {eventInfo?.round || 'Starting Thu 9 Apr · Augusta National'}
+            {eventInfo?.round || 'Apr 9–12 · Augusta National'}
           </div>
         </div>
-        <div className="lb-banner-meta">
+        <div className="lb-banner-right">
           {lastUpdated && (
             <span className="lb-refresh-status">
               {refreshing
