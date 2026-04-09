@@ -9,8 +9,8 @@ function normalizeName(name) {
   return (name || '')
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // strip accents: Højgaard → hojgaard
-    .replace(/['\-]/g, ' ')          // normalise hyphens + apostrophes
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/['\-]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
 }
@@ -49,6 +49,7 @@ function winCount(name) {
 }
 
 function GolferMeta({ name, flag, flagAlt }) {
+  const wins = winCount(name)
   return (
     <span className="golfer-meta">
       {flag && (
@@ -59,11 +60,14 @@ function GolferMeta({ name, flag, flagAlt }) {
           onError={e => { e.target.style.display = 'none' }}
         />
       )}
-    {winCount(name) > 0 && (
-  <span className="golfer-jacket" title="Former Masters champion">
-    {'🏆'.repeat(winCount(name))}
-  </span>
-)}
+      {wins > 0 && (
+        <span className="golfer-jacket" title="Former Masters champion">
+          {'🏆'.repeat(wins)}
+        </span>
+      )}
+    </span>
+  )
+}
 
 // ── Scoring engine ─────────────────────────────────────────────────────────
 
@@ -82,7 +86,6 @@ function calculateEntry(entry, golferMap) {
   const madeCutPicks = picks.filter(p => p.found && p.madeCut)
   const missedCount = picks.filter(p => p.found && !p.madeCut).length
 
-  // Sort ascending: lowest (best) score first
   const sorted = [...withScores].sort((a, b) => a.score - b.score)
   const counting = sorted.slice(0, 3)
   const countingNames = new Set(counting.map(p => p.name))
@@ -91,8 +94,6 @@ function calculateEntry(entry, golferMap) {
     ? counting.reduce((sum, p) => sum + p.score, 0)
     : null
 
-  // Qualified = 3+ players through the cut.
-  // Before the cut has happened (missedCount === 0), treat everyone as qualified.
   const qualified = madeCutPicks.length >= 3 || missedCount === 0
 
   return {
@@ -107,25 +108,19 @@ function calculateEntry(entry, golferMap) {
 
 function rankEntries(calculated) {
   const sorted = [...calculated].sort((a, b) => {
-    // Eliminated entries sink to the bottom
     const aElim = !a.qualified
     const bElim = !b.qualified
     if (aElim && !bElim) return 1
     if (!aElim && bElim) return -1
     if (aElim && bElim) return (b.madeCutCount || 0) - (a.madeCutCount || 0)
 
-    // Entries with no score yet sit below ranked entries
     if (a.teamScore === null && b.teamScore === null) return a.entrant_name.localeCompare(b.entrant_name)
     if (a.teamScore === null) return 1
     if (b.teamScore === null) return -1
 
-    // Primary: team score (lower = better in golf)
     if (a.teamScore !== b.teamScore) return a.teamScore - b.teamScore
-
-    // TB1: most players through the cut
     if (a.madeCutCount !== b.madeCutCount) return b.madeCutCount - a.madeCutCount
 
-    // TB2–4: 4th, 5th, 6th best pick scores
     for (let i = 3; i < 6; i++) {
       const aScore = a.sortedPicks?.[i]?.score ?? 999
       const bScore = b.sortedPicks?.[i]?.score ?? 999
@@ -135,7 +130,6 @@ function rankEntries(calculated) {
     return a.entrant_name.localeCompare(b.entrant_name)
   })
 
-  // Assign display rank (ties share the same number)
   let displayRank = 1
   return sorted.map((entry, idx) => {
     if (idx > 0) {
@@ -230,33 +224,28 @@ export default function LeaderboardPage() {
     setRefreshing(false)
   }
 
-  // O(1) golfer lookup by normalised name
   const golferMap = useMemo(() => {
     const m = new Map()
     golfers.forEach(g => m.set(normalizeName(g.name), g))
     return m
   }, [golfers])
 
-  // All normalised names picked in the sweepstake (for Masters table highlight)
   const sweepstakeNames = useMemo(() => {
     const s = new Set()
     entries.forEach(e => e.picks?.forEach(p => s.add(normalizeName(p.name))))
     return s
   }, [entries])
 
-  // Calculate scores and rank all entries
   const rankings = useMemo(() => {
     const calculated = entries.map(e => calculateEntry(e, golferMap))
     const ranked = rankEntries(calculated)
 
-    // Attach movement deltas vs last refresh
     const withMovement = ranked.map(e => {
       const prev = prevPositionsRef.current[e.id]
       const delta = prev !== undefined ? prev - e.position : 0
       return { ...e, delta }
     })
 
-    // Store current positions for next diff
     const newMap = {}
     ranked.forEach(e => { newMap[e.id] = e.position })
     prevPositionsRef.current = newMap
@@ -278,7 +267,6 @@ export default function LeaderboardPage() {
       next.has(golferId) ? next.delete(golferId) : next.add(golferId)
       return next
     })
-    // Fetch scorecard if not cached yet
     if (!scorecardCache[golferId]) {
       setLoadingScorecards(prev => new Set(prev).add(golferId))
       try {
@@ -364,34 +352,34 @@ export default function LeaderboardPage() {
                       {entry.picks.map((pick, i) => {
                         const golferData = golferMap.get(normalizeName(pick.name))
                         return (
-                        <div
-                          key={i}
-                          className={`sw-pick${pick.counting ? ' sw-pick--counting' : ''}`}
-                        >
                           <div
-                            className="sw-pick-accent"
-                            style={{ background: COLUMNS[pick.columnIndex]?.color || '#1a472a' }}
-                          />
-                          <div className="sw-pick-tier">{pick.columnName}</div>
-                          <div className={`sw-pick-name${pick.counting ? ' sw-pick-name--bold' : ''}`}>
-                            {pick.name}
-                            <GolferMeta
-                              name={pick.name}
-                              flag={golferData?.flag || null}
-                              flagAlt={golferData?.flagAlt || ''}
+                            key={i}
+                            className={`sw-pick${pick.counting ? ' sw-pick--counting' : ''}`}
+                          >
+                            <div
+                              className="sw-pick-accent"
+                              style={{ background: COLUMNS[pick.columnIndex]?.color || '#1a472a' }}
                             />
+                            <div className="sw-pick-tier">{pick.columnName}</div>
+                            <div className={`sw-pick-name${pick.counting ? ' sw-pick-name--bold' : ''}`}>
+                              {pick.name}
+                              <GolferMeta
+                                name={pick.name}
+                                flag={golferData?.flag || null}
+                                flagAlt={golferData?.flagAlt || ''}
+                              />
+                            </div>
+                            <div className="sw-pick-right">
+                              {pick.found ? (
+                                <>
+                                  <ScorePill score={pick.score} />
+                                  <ThruCell thru={pick.thru} status={pick.statusName} />
+                                </>
+                              ) : (
+                                <span className="sw-unmatched">not started</span>
+                              )}
+                            </div>
                           </div>
-                          <div className="sw-pick-right">
-                            {pick.found ? (
-                              <>
-                                <ScorePill score={pick.score} />
-                                <ThruCell thru={pick.thru} status={pick.statusName} />
-                              </>
-                            ) : (
-                              <span className="sw-unmatched">not started</span>
-                            )}
-                          </div>
-                        </div>
                         )
                       })}
                     </div>
