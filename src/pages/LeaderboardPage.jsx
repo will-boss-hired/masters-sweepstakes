@@ -164,7 +164,7 @@ function ThruCell({ thru, status, teeTime }) {
     return <span className="thru-tee">{bst}</span>
   }
   if (!thru || thru === '*') return <span className="thru-dim">—</span>
-  if (thru === 'F' || thru === '18') return <span className="thru-done">F</span>
+  if (thru === 'F' || String(thru) === '18') return <span className="thru-done">F</span>
   return <span className="thru-dim">{thru}</span>
 }
 
