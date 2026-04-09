@@ -625,6 +625,10 @@
   .lb-banner {
     grid-template-columns: auto 1fr;
     grid-template-rows: auto auto;
+    border-radius: 0;
+    margin-left: -16px;
+    margin-right: -16px;
+    padding: 14px 16px;
   }
 
   .lb-banner-right {
@@ -633,7 +637,6 @@
   }
 
   .lb-banner-logo { height: 28px; }
-
   .sw-pick-tier { display: none; }
   .sw-header { gap: 6px; }
 }
