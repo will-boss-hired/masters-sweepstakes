@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { supabase } from '../lib/supabase'
+import { COLUMNS } from '../lib/golfers'
 import './LeaderboardPage.css'
 
 // ── Utilities ──────────────────────────────────────────────────────────────
