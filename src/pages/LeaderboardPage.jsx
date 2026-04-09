@@ -460,22 +460,11 @@ export default function LeaderboardPage() {
                   </span>
                   <MovementBadge delta={entry.delta} />
                   <span className="sw-name">{entry.entrant_name}</span>
-                  <span className="sw-scores">
-                    {isElim ? (
-                      <span className="sw-elim">Elim.</span>
-                    ) : entry.teamScore !== null ? (
-                      <>
-                        <ScorePill score={entry.teamScore} />
-                        {entry.allSixScore !== null && (
-                          <span className="sw-all-six" title="All 6 picks total">
-                            {formatScore(entry.allSixScore)}
-                          </span>
-                        )}
-                      </>
-                    ) : (
-                      <span className="sw-pending">—</span>
-                    )}
-                  </span>
+                  {isElim
+                    ? <span className="sw-elim">Elim.</span>
+                    : entry.teamScore !== null
+                      ? <ScorePill score={entry.teamScore} />
+                      : <span className="sw-pending">—</span>}
                   <span className="sw-chevron" aria-hidden="true">{isExpanded ? '▲' : '▼'}</span>
                 </button>
 
