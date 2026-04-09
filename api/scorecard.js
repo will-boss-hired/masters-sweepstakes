@@ -3,41 +3,65 @@ export default async function handler(req, res) {
   res.setHeader('Cache-Control', 's-maxage=30, stale-while-revalidate=15')
 
   const { player, event } = req.query
+
   if (!player || !event) {
     return res.status(400).json({ error: 'Missing player or event param' })
   }
 
   try {
-    const url = `https://site.web.api.espn.com/apis/site/v2/sports/golf/leaderboard/playersummary?event=${event}&player=${player}`
-    const resp = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } })
-    if (!resp.ok) throw new Error(`ESPN returned ${resp.status}`)
+    const url = `https://sports.core.api.espn.com/v2/sports/golf/leagues/pga/events/${event}/competitions/${event}/competitors/${player}/linescores?lang=en&region=us`
+
+    const resp = await fetch(url, {
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+    })
+
+    if (!resp.ok) {
+      console.error(`[scorecard] ESPN returned ${resp.status} for event=${event}&player=${player}`)
+      return res.status(resp.status).json({ error: `ESPN API returned ${resp.status}` })
+    }
 
     const json = await resp.json()
 
-    // Extract rounds with hole-by-hole linescores
-    const rounds = (json.rounds || []).map(round => {
-      const holes = (round.linescores || []).map(ls => ({
-        number: ls.hole?.number ?? null,
-        par: ls.hole?.par ?? null,
-        score: ls.value ?? null,
-        toPar: ls.score?.value ?? null,
-        displayScore: ls.displayValue ?? '—',
-        type: ls.type?.displayName ?? null, // BIRDIE, EAGLE, PAR, BOGEY, etc.
-      }))
-      return {
-        period: round.period,
-        displayScore: round.displayScore ?? '—',
-        toPar: round.linescores?.reduce((s, ls) => {
-          const v = ls.score?.value
-          return v != null ? s + v : s
-        }, 0) ?? null,
-        holes,
-      }
-    }).filter(r => r.holes.length > 0)
+    // Each item in json.items is a round
+    const rounds = (json.items || [])
+      .filter(round => round.linescores && round.linescores.length > 0)
+      .map(round => {
+        const holes = round.linescores.map(ls => ({
+          number: ls.period ?? null,
+          par: ls.par ?? null,
+          score: ls.value ?? null,
+          displayScore: ls.displayValue ?? '—',
+          type: ls.scoreType?.name ?? null,         // PAR, BIRDIE, EAGLE, BOGEY etc.
+          typeDisplay: ls.scoreType?.displayName ?? null,
+        }))
+
+        // Calculate round to-par from hole scoretypes
+        const toPar = holes.reduce((sum, h) => {
+          if (h.score != null && h.par != null) return sum + (h.score - h.par)
+          return sum
+        }, 0)
+
+        // Pull out round-level stats if available
+        const stats = {}
+        const categories = round.statistics?.categories ?? []
+        for (const cat of categories) {
+          for (const stat of cat.stats ?? []) {
+            stats[stat.name] = stat.displayValue
+          }
+        }
+
+        return {
+          period: round.period,
+          teeTime: round.teeTime ?? null,
+          displayScore: round.displayValue ?? '—',
+          toPar,
+          holes,
+          stats,
+        }
+      })
 
     return res.json({
       playerId: player,
-      name: json.athlete?.displayName ?? '',
       rounds,
     })
   } catch (err) {
