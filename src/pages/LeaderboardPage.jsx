@@ -87,7 +87,6 @@ function TournamentStatus({ eventInfo }) {
   const timeLeft = useCountdown(FIRST_TEE_TIME)
   const pad = n => String(n).padStart(2, '0')
 
-  // Tournament underway or countdown expired
   if (!timeLeft) {
     const round = eventInfo?.round
     const isLive = eventInfo?.status === 'STATUS_IN_PROGRESS'
@@ -101,7 +100,6 @@ function TournamentStatus({ eventInfo }) {
     )
   }
 
-  // Pre-tournament countdown
   const days = Math.floor(timeLeft.diff / 86400000)
   return (
     <div className="lb-tourney-status lb-tourney-status--pre">
@@ -187,6 +185,7 @@ function calculateEntry(entry, golferMap) {
   const madeCutPicks = picks.filter(p => p.found && p.madeCut)
   const missedCount = picks.filter(p => p.found && !p.madeCut).length
 
+  // Top 3 scores (counting picks)
   const sorted = [...withScores].sort((a, b) => a.score - b.score)
   const counting = sorted.slice(0, 3)
   const countingNames = new Set(counting.map(p => p.name))
@@ -195,12 +194,18 @@ function calculateEntry(entry, golferMap) {
     ? counting.reduce((sum, p) => sum + p.score, 0)
     : null
 
+  // All-6 accumulative score (tiebreaker)
+  const allSixScore = withScores.length > 0
+    ? withScores.reduce((sum, p) => sum + p.score, 0)
+    : null
+
   const qualified = madeCutPicks.length >= 3 || missedCount === 0
 
   return {
     ...entry,
     picks: picks.map(p => ({ ...p, counting: countingNames.has(p.name) })),
     teamScore,
+    allSixScore,
     qualified,
     madeCutCount: madeCutPicks.length,
     sortedPicks: sorted,
@@ -211,23 +216,36 @@ function rankEntries(calculated) {
   const sorted = [...calculated].sort((a, b) => {
     const aElim = !a.qualified
     const bElim = !b.qualified
+
+    // Eliminated entries go to the bottom
     if (aElim && !bElim) return 1
     if (!aElim && bElim) return -1
     if (aElim && bElim) return (b.madeCutCount || 0) - (a.madeCutCount || 0)
 
+    // 1. Top-3 team score
     if (a.teamScore === null && b.teamScore === null) return a.entrant_name.localeCompare(b.entrant_name)
     if (a.teamScore === null) return 1
     if (b.teamScore === null) return -1
-
     if (a.teamScore !== b.teamScore) return a.teamScore - b.teamScore
+
+    // 2. Most cuts made
     if (a.madeCutCount !== b.madeCutCount) return b.madeCutCount - a.madeCutCount
 
+    // 3. All-6 accumulative score
+    const aAll = a.allSixScore ?? 999
+    const bAll = b.allSixScore ?? 999
+    if (aAll !== bAll) return aAll - bAll
+
+    // 4. 4th pick score
+    // 5. 5th pick score
+    // 6. 6th pick score
     for (let i = 3; i < 6; i++) {
       const aScore = a.sortedPicks?.[i]?.score ?? 999
       const bScore = b.sortedPicks?.[i]?.score ?? 999
       if (aScore !== bScore) return aScore - bScore
     }
 
+    // 7. Equal split — sort alphabetically as a stable fallback
     return a.entrant_name.localeCompare(b.entrant_name)
   })
 
@@ -315,7 +333,6 @@ export default function LeaderboardPage() {
     return s
   }, [entries])
 
-  // Map of normalised name → tier colour for Masters leaderboard bar
   const golferTierColor = useMemo(() => {
     const m = new Map()
     entries.forEach(e => {
@@ -443,11 +460,22 @@ export default function LeaderboardPage() {
                   </span>
                   <MovementBadge delta={entry.delta} />
                   <span className="sw-name">{entry.entrant_name}</span>
-                  {isElim
-                    ? <span className="sw-elim">Elim.</span>
-                    : entry.teamScore !== null
-                      ? <ScorePill score={entry.teamScore} />
-                      : <span className="sw-pending">—</span>}
+                  <span className="sw-scores">
+                    {isElim ? (
+                      <span className="sw-elim">Elim.</span>
+                    ) : entry.teamScore !== null ? (
+                      <>
+                        <ScorePill score={entry.teamScore} />
+                        {entry.allSixScore !== null && (
+                          <span className="sw-all-six" title="All 6 picks total">
+                            {formatScore(entry.allSixScore)}
+                          </span>
+                        )}
+                      </>
+                    ) : (
+                      <span className="sw-pending">—</span>
+                    )}
+                  </span>
                   <span className="sw-chevron" aria-hidden="true">{isExpanded ? '▲' : '▼'}</span>
                 </button>
 
@@ -491,8 +519,10 @@ export default function LeaderboardPage() {
                     <div className="sw-footer">
                       <span>{entry.madeCutCount} of 6 through cut</span>
                       <span>
-                        Team score:{' '}
-                        <strong>{entry.teamScore !== null ? formatScore(entry.teamScore) : 'pending'}</strong>
+                        Team score: <strong>{entry.teamScore !== null ? formatScore(entry.teamScore) : 'pending'}</strong>
+                        {entry.allSixScore !== null && (
+                          <span className="sw-footer-allsix"> · All 6: <strong>{formatScore(entry.allSixScore)}</strong></span>
+                        )}
                       </span>
                     </div>
                   </div>
