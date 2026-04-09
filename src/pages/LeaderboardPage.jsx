@@ -275,6 +275,7 @@ export default function LeaderboardPage() {
   const [error, setError] = useState(null)
   const [expandedIds, setExpandedIds] = useState(new Set())
   const [sweepstakeOnly, setSweepstakeOnly] = useState(false)
+  const [playingOnly, setPlayingOnly] = useState(false)
   const [expandedGolferIds, setExpandedGolferIds] = useState(new Set())
   const [scorecardCache, setScorecardCache] = useState({})
   const [loadingScorecards, setLoadingScorecards] = useState(new Set())
@@ -532,12 +533,20 @@ export default function LeaderboardPage() {
                 Colour bar = sweepstake pick tier · Tap a row to see hole-by-hole scorecard
               </p>
             </div>
-            <button
-              className={`lb-toggle${sweepstakeOnly ? ' lb-toggle--on' : ''}`}
-              onClick={() => setSweepstakeOnly(prev => !prev)}
-            >
-              {sweepstakeOnly ? 'Sweepstake picks only' : 'Show all golfers'}
-            </button>
+            <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+              <button
+                className={`lb-toggle${sweepstakeOnly ? ' lb-toggle--on' : ''}`}
+                onClick={() => setSweepstakeOnly(prev => !prev)}
+              >
+                {sweepstakeOnly ? 'Sweepstake picks only' : 'Show all golfers'}
+              </button>
+              <button
+                className={`lb-toggle${playingOnly ? ' lb-toggle--on' : ''}`}
+                onClick={() => setPlayingOnly(prev => !prev)}
+              >
+                {playingOnly ? 'Currently playing' : 'Currently playing'}
+              </button>
+            </div>
           </div>
           <div className="masters-wrap">
             <table className="masters-table">
@@ -556,6 +565,7 @@ export default function LeaderboardPage() {
               <tbody>
                 {golfers
                   .filter(g => !sweepstakeOnly || sweepstakeNames.has(normalizeName(g.name)))
+                  .filter(g => !playingOnly || g.status === 'STATUS_IN_PROGRESS')
                   .map((g, i) => {
                     const inSweepstake = sweepstakeNames.has(normalizeName(g.name))
                     const missed = MISSED_CUT.has(g.status)
