@@ -29,11 +29,25 @@ export default async function handler(req, res) {
       thru: c.status?.thru || '',
       round: c.status?.period || 1,
       status: c.status?.type?.name || 'STATUS_ACTIVE',
+      sortOrder: c.sortOrder || 999,
       linescores: (c.linescores || []).map(ls => ({
         value: ls.value,
         display: ls.displayValue || '—',
       })),
     }))
+
+    // Golfers who have started sort by ESPN's sortOrder (leaderboard position).
+    // Golfers yet to tee off sort by tee time ascending.
+    golfers.sort((a, b) => {
+      const aScheduled = a.status === 'STATUS_SCHEDULED'
+      const bScheduled = b.status === 'STATUS_SCHEDULED'
+      if (!aScheduled && !bScheduled) return a.sortOrder - b.sortOrder
+      if (!aScheduled && bScheduled) return -1
+      if (aScheduled && !bScheduled) return 1
+      // Both scheduled — sort by tee time
+      if (a.teeTime && b.teeTime) return new Date(a.teeTime) - new Date(b.teeTime)
+      return 0
+    })
 
     return res.json({
       golfers,
