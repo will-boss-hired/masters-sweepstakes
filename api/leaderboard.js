@@ -25,6 +25,7 @@ export default async function handler(req, res) {
       flagAlt: c.athlete?.flag?.alt || '',
       position: c.status?.position?.displayName || '—',
       score: c.score?.displayValue || 'E',
+      teeTime: c.status?.teeTime || null,
       thru: c.status?.thru || '',
       round: c.status?.period || 1,
       status: c.status?.type?.name || 'STATUS_ACTIVE',
