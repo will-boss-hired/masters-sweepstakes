@@ -322,6 +322,8 @@ export default function LeaderboardPage() {
 
       {error && <div className="lb-error">{error}</div>}
 
+      <div className="lb-grid">
+
       {/* ── Sweepstake standings ──────────────────────── */}
       <section className="lb-section">
         <h2 className="lb-section-title">Sweepstake standings</h2>
@@ -547,6 +549,8 @@ export default function LeaderboardPage() {
           <p>Scores will appear here once the tournament begins.</p>
         </div>
       )}
+
+      </div>{/* end lb-grid */}
 
     </div>
   )
