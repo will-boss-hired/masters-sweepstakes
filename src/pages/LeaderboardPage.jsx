@@ -300,7 +300,7 @@ export default function LeaderboardPage() {
       <section className="lb-section">
         <h2 className="lb-section-title">Sweepstake standings</h2>
         <p className="lb-section-sub">
-          Tap an entry to see all 6 picks · Green dots mark the 3 counting toward the team score
+          Tap an entry to see all 6 picks · Top 3 scores count toward the team total
         </p>
 
         <div className="sw-list">
@@ -333,17 +333,19 @@ export default function LeaderboardPage() {
                       {entry.picks.map((pick, i) => (
                         <div
                           key={i}
-                          className={`sw-pick${pick.counting ? ' sw-pick--counting' : ' sw-pick--dim'}`}
+                          className={`sw-pick${pick.counting ? ' sw-pick--counting' : ''}`}
                         >
-                          <div className="sw-pick-accent" />
+                          <div
+                            className="sw-pick-accent"
+                            style={{ background: COLUMNS[pick.columnIndex]?.color || '#1a472a' }}
+                          />
                           <div className="sw-pick-tier">{pick.columnName}</div>
-                          <div className="sw-pick-name">{pick.name}</div>
+                          <div className={`sw-pick-name${pick.counting ? ' sw-pick-name--bold' : ''}`}>{pick.name}</div>
                           <div className="sw-pick-right">
                             {pick.found ? (
                               <>
                                 <ScorePill score={pick.score} />
                                 <ThruCell thru={pick.thru} status={pick.statusName} />
-                                {pick.counting && <span className="sw-dot" title="Counting toward team score" />}
                               </>
                             ) : (
                               <span className="sw-unmatched">not started</span>
