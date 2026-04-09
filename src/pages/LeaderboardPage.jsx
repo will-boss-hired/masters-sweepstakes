@@ -3,6 +3,10 @@ import { supabase } from '../lib/supabase'
 import { COLUMNS } from '../lib/golfers'
 import './LeaderboardPage.css'
 
+// ── Constants ──────────────────────────────────────────────────────────────
+
+const FIRST_TEE_TIME = new Date('2026-04-09T12:40:00+01:00')
+
 // ── Utilities ──────────────────────────────────────────────────────────────
 
 function normalizeName(name) {
@@ -28,6 +32,15 @@ function formatScore(n) {
   return n > 0 ? `+${n}` : String(n)
 }
 
+function formatTeeTime(isoString) {
+  if (!isoString) return null
+  return new Date(isoString).toLocaleTimeString('en-GB', {
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'Europe/London',
+  })
+}
+
 const MISSED_CUT = new Set([
   'STATUS_MISSED_CUT',
   'STATUS_WITHDRAWN',
@@ -46,6 +59,70 @@ const PREVIOUS_WINNERS = new Map([
 
 function winCount(name) {
   return PREVIOUS_WINNERS.get(normalizeName(name)) || 0
+}
+
+// ── Hooks ──────────────────────────────────────────────────────────────────
+
+function useCountdown(target) {
+  const [timeLeft, setTimeLeft] = useState(null)
+  useEffect(() => {
+    function calc() {
+      const diff = target - Date.now()
+      if (diff <= 0) return setTimeLeft(null)
+      const h = Math.floor(diff / 3600000)
+      const m = Math.floor((diff % 3600000) / 60000)
+      const s = Math.floor((diff % 60000) / 1000)
+      setTimeLeft({ h, m, s, diff })
+    }
+    calc()
+    const id = setInterval(calc, 1000)
+    return () => clearInterval(id)
+  }, [target])
+  return timeLeft
+}
+
+// ── Sub-components ─────────────────────────────────────────────────────────
+
+function TournamentStatus({ eventInfo }) {
+  const timeLeft = useCountdown(FIRST_TEE_TIME)
+  const pad = n => String(n).padStart(2, '0')
+
+  // Tournament underway or countdown expired
+  if (!timeLeft) {
+    const round = eventInfo?.round
+    const isLive = eventInfo?.status === 'STATUS_IN_PROGRESS'
+    return (
+      <div className="lb-tourney-status">
+        {isLive && <span className="lb-live-dot" />}
+        <span className="lb-live-text">
+          {round || 'Masters Tournament underway'}
+        </span>
+      </div>
+    )
+  }
+
+  // Pre-tournament countdown
+  const days = Math.floor(timeLeft.diff / 86400000)
+  return (
+    <div className="lb-tourney-status lb-tourney-status--pre">
+      <span className="lb-countdown-label">First tee time</span>
+      <div className="lb-countdown-timer">
+        {days > 0 && (
+          <>
+            <span className="lb-countdown-digits">{days}</span>
+            <span className="lb-countdown-unit">d</span>
+          </>
+        )}
+        <span className="lb-countdown-digits">{pad(timeLeft.h % 24)}</span>
+        <span className="lb-countdown-unit">h</span>
+        <span className="lb-countdown-digits">{pad(timeLeft.m)}</span>
+        <span className="lb-countdown-unit">m</span>
+        <span className="lb-countdown-digits">{pad(timeLeft.s)}</span>
+        <span className="lb-countdown-unit">s</span>
+      </div>
+      <span className="lb-countdown-sub">12:40 PM BST · Augusta National</span>
+    </div>
+  )
 }
 
 function GolferMeta({ name, flag, flagAlt }) {
@@ -67,6 +144,30 @@ function GolferMeta({ name, flag, flagAlt }) {
       )}
     </span>
   )
+}
+
+function MovementBadge({ delta }) {
+  if (!delta) return <span className="mv mv-flat">—</span>
+  if (delta > 0) return <span className="mv mv-up">▲{delta}</span>
+  return <span className="mv mv-down">▼{Math.abs(delta)}</span>
+}
+
+function ScorePill({ score }) {
+  const n = typeof score === 'string' ? parseScore(score) : score
+  if (n === null) return <span className="score-pill even">—</span>
+  const cls = n < 0 ? 'under' : n > 0 ? 'over' : 'even'
+  return <span className={`score-pill ${cls}`}>{formatScore(n)}</span>
+}
+
+function ThruCell({ thru, status, teeTime }) {
+  if (MISSED_CUT.has(status)) return <span className="thru-cut">CUT</span>
+  if (status === 'STATUS_SCHEDULED' && teeTime) {
+    const bst = formatTeeTime(teeTime)
+    return <span className="thru-tee">{bst}</span>
+  }
+  if (!thru || thru === '*') return <span className="thru-dim">—</span>
+  if (thru === 'F') return <span className="thru-done">F</span>
+  return <span className="thru-dim">{thru}</span>
 }
 
 // ── Scoring engine ─────────────────────────────────────────────────────────
@@ -142,28 +243,6 @@ function rankEntries(calculated) {
     }
     return { ...entry, rank: displayRank, position: idx + 1 }
   })
-}
-
-// ── Sub-components ─────────────────────────────────────────────────────────
-
-function MovementBadge({ delta }) {
-  if (!delta) return <span className="mv mv-flat">—</span>
-  if (delta > 0) return <span className="mv mv-up">▲{delta}</span>
-  return <span className="mv mv-down">▼{Math.abs(delta)}</span>
-}
-
-function ScorePill({ score }) {
-  const n = typeof score === 'string' ? parseScore(score) : score
-  if (n === null) return <span className="score-pill even">—</span>
-  const cls = n < 0 ? 'under' : n > 0 ? 'over' : 'even'
-  return <span className={`score-pill ${cls}`}>{formatScore(n)}</span>
-}
-
-function ThruCell({ thru, status }) {
-  if (MISSED_CUT.has(status)) return <span className="thru-cut">CUT</span>
-  if (!thru || thru === '*') return <span className="thru-dim">—</span>
-  if (thru === 'F') return <span className="thru-done">F</span>
-  return <span className="thru-dim">{thru}</span>
 }
 
 // ── Main page ──────────────────────────────────────────────────────────────
@@ -320,6 +399,9 @@ export default function LeaderboardPage() {
         </div>
       </div>
 
+      {/* ── Tournament status / countdown ────────────── */}
+      <TournamentStatus eventInfo={eventInfo} />
+
       {error && <div className="lb-error">{error}</div>}
 
       <div className="lb-grid">
@@ -382,7 +464,7 @@ export default function LeaderboardPage() {
                               {pick.found ? (
                                 <>
                                   <ScorePill score={pick.score} />
-                                  <ThruCell thru={pick.thru} status={pick.statusName} />
+                                  <ThruCell thru={pick.thru} status={pick.statusName} teeTime={golferData?.teeTime} />
                                 </>
                               ) : (
                                 <span className="sw-unmatched">not started</span>
@@ -431,7 +513,7 @@ export default function LeaderboardPage() {
                   <th>Pos</th>
                   <th>Player</th>
                   <th>Score</th>
-                  <th>Thru</th>
+                  <th>Thru / Tee</th>
                   <th>R1</th>
                   <th>R2</th>
                   <th>R3</th>
@@ -466,7 +548,7 @@ export default function LeaderboardPage() {
                           </td>
                           <td><ScorePill score={scoreNum} /></td>
                           <td className="masters-thru">
-                            <ThruCell thru={g.thru} status={g.status} />
+                            <ThruCell thru={g.thru} status={g.status} teeTime={g.teeTime} />
                           </td>
                           {[0, 1, 2, 3].map(r => (
                             <td key={r} className="masters-round">
