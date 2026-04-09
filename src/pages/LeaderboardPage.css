@@ -103,6 +103,31 @@
   flex-shrink: 0;
 }
 
+/* â”€â”€ Golfer meta (flag + jacket) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.golfer-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.golfer-flag {
+  width: 16px;
+  height: 11px;
+  object-fit: cover;
+  border-radius: 1px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.golfer-jacket {
+  font-size: 11px;
+  line-height: 1;
+}
+
 /* â”€â”€ Score pills â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .score-pill {
