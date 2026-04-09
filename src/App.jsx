@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, NavLink, Link } from 'react-router-dom'
 import EntryPage from './pages/EntryPage'
 import AdminPage from './pages/AdminPage'
 import EntriesPage from './pages/EntriesPage'
+import LeaderboardPage from './pages/LeaderboardPage'
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
             <nav className="header-nav">
               <NavLink to="/" end>Enter</NavLink>
               <NavLink to="/entries">Entries</NavLink>
+              <NavLink to="/leaderboard">Leaderboard</NavLink>
               <NavLink to="/admin">Admin</NavLink>
             </nav>
           </div>
@@ -27,6 +29,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<EntryPage />} />
             <Route path="/entries" element={<EntriesPage />} />
+            <Route path="/leaderboard" element={<LeaderboardPage />} />
             <Route path="/admin" element={<AdminPage />} />
           </Routes>
         </main>
