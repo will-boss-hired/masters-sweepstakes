@@ -315,6 +315,20 @@ export default function LeaderboardPage() {
     return s
   }, [entries])
 
+  // Map of normalised name → tier colour for Masters leaderboard bar
+  const golferTierColor = useMemo(() => {
+    const m = new Map()
+    entries.forEach(e => {
+      e.picks?.forEach(pick => {
+        const key = normalizeName(pick.name)
+        if (!m.has(key)) {
+          m.set(key, COLUMNS[pick.columnIndex]?.color || '#1a472a')
+        }
+      })
+    })
+    return m
+  }, [entries])
+
   const rankings = useMemo(() => {
     const calculated = entries.map(e => calculateEntry(e, golferMap))
     const ranked = rankEntries(calculated)
@@ -496,7 +510,7 @@ export default function LeaderboardPage() {
             <div>
               <h2 className="lb-section-title">Masters leaderboard</h2>
               <p className="lb-section-sub">
-                <span className="legend-dot" /> Picked in sweepstake · Tap a row to see hole-by-hole scorecard
+                Colour bar = sweepstake pick tier · Tap a row to see hole-by-hole scorecard
               </p>
             </div>
             <button
@@ -541,7 +555,12 @@ export default function LeaderboardPage() {
                         >
                           <td className="masters-pos">{missed ? 'CUT' : g.position}</td>
                           <td className="masters-player">
-                            {inSweepstake && <span className="masters-dot" />}
+                            {inSweepstake && (
+                              <span
+                                className="masters-tier-bar"
+                                style={{ background: golferTierColor.get(normalizeName(g.name)) }}
+                              />
+                            )}
                             {g.name}
                             <GolferMeta name={g.name} flag={g.flag} flagAlt={g.flagAlt} />
                             <span className="masters-chevron">{isGolferExpanded ? '▲' : '▼'}</span>
