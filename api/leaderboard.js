@@ -1,40 +1,52 @@
+function formatOverallScore(value) {
+  if (value === null || value === undefined) return 'E'
+  if (value === 0) return 'E'
+  return value > 0 ? `+${value}` : String(value)
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=30')
-
   try {
     const resp = await fetch(
       'https://site.api.espn.com/apis/site/v2/sports/golf/leaderboard?league=pga',
       { headers: { 'User-Agent': 'Mozilla/5.0' } }
     )
     if (!resp.ok) throw new Error(`ESPN returned ${resp.status}`)
-
     const json = await resp.json()
     const event = json.events?.[0]
-
     if (!event) {
       return res.json({ golfers: [], eventName: null, roundInfo: null, eventStatus: null })
     }
-
     const comp = event.competitions?.[0]
-
-    const golfers = (comp?.competitors || []).map(c => ({
-      id: c.athlete?.id,
-      name: c.athlete?.displayName || '',
-      flag: c.athlete?.flag?.href || null,
-      flagAlt: c.athlete?.flag?.alt || '',
-      position: c.status?.position?.displayName || '—',
-      score: c.score?.displayValue || 'E',
-      teeTime: c.status?.teeTime || null,
-      thru: c.status?.thru || '',
-      round: c.status?.period || 1,
-      status: c.status?.type?.name || 'STATUS_ACTIVE',
-      sortOrder: c.sortOrder || 999,
-      linescores: (c.linescores || []).map(ls => ({
+    const golfers = (comp?.competitors || []).map(c => {
+      const linescores = (c.linescores || []).map(ls => ({
         value: ls.value,
         display: ls.displayValue || '—',
-      })),
-    }))
+      }))
+
+      // Sum all round linescore values to get live overall to-par score.
+      // ESPN's c.score.displayValue doesn't update during an active round.
+      const lsValues = linescores.map(ls => ls.value).filter(v => v != null && !isNaN(v))
+      const overallScore = lsValues.length > 0
+        ? formatOverallScore(lsValues.reduce((a, b) => a + b, 0))
+        : (c.score?.displayValue || 'E')
+
+      return {
+        id: c.athlete?.id,
+        name: c.athlete?.displayName || '',
+        flag: c.athlete?.flag?.href || null,
+        flagAlt: c.athlete?.flag?.alt || '',
+        position: c.status?.position?.displayName || '—',
+        score: overallScore,
+        teeTime: c.status?.teeTime || null,
+        thru: c.status?.thru || '',
+        round: c.status?.period || 1,
+        status: c.status?.type?.name || 'STATUS_ACTIVE',
+        sortOrder: c.sortOrder || 999,
+        linescores,
+      }
+    })
 
     // Golfers who have started sort by ESPN's sortOrder (leaderboard position).
     // Golfers yet to tee off sort by tee time ascending.
@@ -44,7 +56,6 @@ export default async function handler(req, res) {
       if (!aScheduled && !bScheduled) return a.sortOrder - b.sortOrder
       if (!aScheduled && bScheduled) return -1
       if (aScheduled && !bScheduled) return 1
-      // Both scheduled — sort by tee time
       if (a.teeTime && b.teeTime) return new Date(a.teeTime) - new Date(b.teeTime)
       return 0
     })
