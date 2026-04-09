@@ -650,6 +650,34 @@ export default function LeaderboardPage() {
                                   ))}
                                 </div>
                               )}
+                              {(() => {
+                                const pickers = rankings.filter(e =>
+                                  e.picks?.some(p => normalizeName(p.name) === normalizeName(g.name))
+                                )
+                                if (pickers.length === 0) return null
+                                return (
+                                  <div className="sc-picked-by">
+                                    <div className="sc-picked-by-label">Picked by</div>
+                                    {pickers.map(e => {
+                                      const score = e.teamScore
+                                      const scoreStr = score === null ? '—' : formatScore(score)
+                                      const scoreClass = score === null ? 'sc-pb-score--even'
+                                        : score < 0 ? 'sc-pb-score--under'
+                                        : score > 0 ? 'sc-pb-score--over'
+                                        : 'sc-pb-score--even'
+                                      return (
+                                        <div key={e.id} className="sc-pb-row">
+                                          <span className="sc-pb-rank">
+                                            {e.teamScore !== null && e.qualified ? `#${e.rank}` : '—'}
+                                          </span>
+                                          <span className="sc-pb-name">{e.entrant_name}</span>
+                                          <span className={`sc-pb-score ${scoreClass}`}>{scoreStr}</span>
+                                        </div>
+                                      )
+                                    })}
+                                  </div>
+                                )
+                              })()}
                             </td>
                           </tr>
                         )}
