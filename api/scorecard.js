@@ -26,14 +26,19 @@ export default async function handler(req, res) {
     const rounds = (json.items || [])
       .filter(round => round.linescores && round.linescores.length > 0)
       .map(round => {
-        const holes = round.linescores.map(ls => ({
-          number: ls.period ?? null,
-          par: ls.par ?? null,
-          score: ls.value ?? null,
-          displayScore: ls.displayValue ?? '—',
-          type: ls.scoreType?.name ?? null,         // PAR, BIRDIE, EAGLE, BOGEY etc.
-          typeDisplay: ls.scoreType?.displayName ?? null,
-        }))
+        const holes = round.linescores.map(ls => {
+          const score = ls.value ?? null
+          const par = ls.par ?? null
+          return {
+            number: ls.period ?? null,
+            par,
+            score,
+            toPar: score != null && par != null ? score - par : null,
+            displayScore: ls.displayValue ?? '—',
+            type: ls.scoreType?.name ?? null,         // PAR, BIRDIE, EAGLE, BOGEY etc.
+            typeDisplay: ls.scoreType?.displayName ?? null,
+          }
+        })
 
         // Calculate round to-par from hole scoretypes
         const toPar = holes.reduce((sum, h) => {
