@@ -519,7 +519,23 @@
 .sc-bogey  { background: transparent; color: var(--text); border: 1.5px solid var(--subtle); }
 .sc-double { background: #2471a3; color: #fff; }
 
+/* â”€â”€ Two-column desktop layout â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.lb-grid {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 2rem;
+  align-items: start;
+}
+
 /* â”€â”€ Responsive â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+@media (max-width: 900px) {
+  .lb-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
 
 @media (max-width: 600px) {
   .lb-banner {
