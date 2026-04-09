@@ -1,9 +1,3 @@
-function formatOverallScore(value) {
-  if (value === null || value === undefined) return 'E'
-  if (value === 0) return 'E'
-  return value > 0 ? `+${value}` : String(value)
-}
-
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=30')
@@ -25,12 +19,7 @@ export default async function handler(req, res) {
         display: ls.displayValue || '—',
       }))
 
-      // Sum all round linescore values to get live overall to-par score.
-      // ESPN's c.score.displayValue doesn't update during an active round.
-      const lsValues = linescores.map(ls => ls.value).filter(v => v != null && !isNaN(v))
-      const overallScore = lsValues.length > 0
-        ? formatOverallScore(lsValues.reduce((a, b) => a + b, 0))
-        : (c.score?.displayValue || 'E')
+      const overallScore = c.score?.displayValue || 'E'
 
       return {
         id: c.athlete?.id,
