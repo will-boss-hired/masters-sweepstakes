@@ -19,7 +19,19 @@ export default async function handler(req, res) {
         display: ls.displayValue || '—',
       }))
 
-      const overallScore = c.score?.displayValue || 'E'
+      // Sum the to-par displayValue of each round linescore to get live overall score.
+      // c.score.displayValue doesn't update during an active round — linescore displayValues do.
+      const validLinescores = linescores.filter(ls => ls.display && ls.display !== '—')
+      let overallScore = 'E'
+      if (validLinescores.length > 0) {
+        const total = validLinescores.reduce((sum, ls) => {
+          const str = ls.display
+          if (!str || str === 'E' || str === 'Even') return sum
+          const n = parseInt(str.replace('+', ''), 10)
+          return sum + (isNaN(n) ? 0 : n)
+        }, 0)
+        overallScore = total === 0 ? 'E' : total > 0 ? `+${total}` : String(total)
+      }
 
       return {
         id: c.athlete?.id,
@@ -37,8 +49,6 @@ export default async function handler(req, res) {
       }
     })
 
-    // Golfers who have started sort by ESPN's sortOrder (leaderboard position).
-    // Golfers yet to tee off sort by tee time ascending.
     golfers.sort((a, b) => {
       const aScheduled = a.status === 'STATUS_SCHEDULED'
       const bScheduled = b.status === 'STATUS_SCHEDULED'
