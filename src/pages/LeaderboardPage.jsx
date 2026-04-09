@@ -151,7 +151,8 @@ export default function LeaderboardPage() {
   const [refreshing, setRefreshing] = useState(false)
   const [lastUpdated, setLastUpdated] = useState(null)
   const [error, setError] = useState(null)
-  const [expandedId, setExpandedId] = useState(null)
+  const [expandedIds, setExpandedIds] = useState(new Set())
+  const [sweepstakeOnly, setSweepstakeOnly] = useState(false)
   const prevPositionsRef = useRef({})
 
   useEffect(() => {
@@ -230,7 +231,11 @@ export default function LeaderboardPage() {
   }, [entries, golferMap])
 
   function toggleExpand(id) {
-    setExpandedId(prev => (prev === id ? null : id))
+    setExpandedIds(prev => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      return next
+    })
   }
 
   if (loading) return <div className="loading">Loading leaderboard…</div>
@@ -272,7 +277,7 @@ export default function LeaderboardPage() {
 
         <div className="sw-list">
           {rankings.map(entry => {
-            const isExpanded = expandedId === entry.id
+            const isExpanded = expandedIds.has(entry.id)
             const isElim = !entry.qualified && entry.madeCutCount < 3 && hasScores
 
             return (
@@ -337,10 +342,20 @@ export default function LeaderboardPage() {
       {/* ── Masters field leaderboard ────────────────── */}
       {hasScores && (
         <section className="lb-section">
-          <h2 className="lb-section-title">Masters leaderboard</h2>
-          <p className="lb-section-sub">
-            <span className="legend-dot" /> Golfer picked in the sweepstake
-          </p>
+          <div className="lb-section-header">
+            <div>
+              <h2 className="lb-section-title">Masters leaderboard</h2>
+              <p className="lb-section-sub">
+                <span className="legend-dot" /> Golfer picked in the sweepstake
+              </p>
+            </div>
+            <button
+              className={`lb-toggle${sweepstakeOnly ? ' lb-toggle--on' : ''}`}
+              onClick={() => setSweepstakeOnly(prev => !prev)}
+            >
+              {sweepstakeOnly ? 'Sweepstake picks only' : 'Show all golfers'}
+            </button>
+          </div>
           <div className="masters-wrap">
             <table className="masters-table">
               <thead>
@@ -356,7 +371,9 @@ export default function LeaderboardPage() {
                 </tr>
               </thead>
               <tbody>
-                {golfers.map((g, i) => {
+                {golfers
+                  .filter(g => !sweepstakeOnly || sweepstakeNames.has(normalizeName(g.name)))
+                  .map((g, i) => {
                   const inSweepstake = sweepstakeNames.has(normalizeName(g.name))
                   const missed = MISSED_CUT.has(g.status)
                   const scoreNum = parseScore(g.score)
