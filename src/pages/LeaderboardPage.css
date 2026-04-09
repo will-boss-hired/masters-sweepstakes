@@ -1,44 +1,74 @@
-.lb-wrap { padding-bottom: 2rem; }
+/* â”€â”€ Masters palette â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+:root {
+  --masters-green:      #1a472a;
+  --masters-green-mid:  #2d6a3e;
+  --masters-green-light:#e8f2ec;
+  --masters-gold:       #c9a84c;
+  --masters-gold-light: #f5e9cb;
+  --masters-red:        #c0392b;
+  --masters-cream:      #f7f3ed;
+}
+
+.lb-wrap { padding-bottom: 3rem; }
 
 /* â”€â”€ Banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .lb-banner {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  background: #1a472a;
-  color: #fff;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  background: var(--masters-green);
   border-radius: var(--radius);
-  padding: 14px 18px;
-  margin-bottom: 1.5rem;
+  padding: 16px 20px;
+  margin-bottom: 2rem;
 }
 
+.lb-banner-logo-wrap {
+  background: #fff;
+  border-radius: 8px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.lb-banner-logo {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+.lb-banner-center { min-width: 0; }
+
 .lb-banner-title {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
+  color: #fff;
   font-family: 'EB Garamond', serif;
   margin-bottom: 3px;
+  letter-spacing: 0.01em;
 }
 
 .lb-banner-round {
   font-size: 12px;
-  opacity: 0.75;
+  color: rgba(255,255,255,0.65);
 }
 
-.lb-banner-meta {
+.lb-banner-right {
   flex-shrink: 0;
   text-align: right;
-  padding-top: 2px;
 }
 
 .lb-refresh-status {
   font-size: 11px;
-  opacity: 0.65;
+  color: rgba(255,255,255,0.55);
 }
 
 .lb-error {
-  border: 1px solid #e74c3c;
-  color: #c0392b;
+  border: 1px solid var(--masters-red);
+  color: var(--masters-red);
   border-radius: var(--radius);
   padding: 10px 14px;
   font-size: 13px;
@@ -54,41 +84,22 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 0.25rem;
-}
-
-.lb-toggle {
-  flex-shrink: 0;
-  margin-top: 2px;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 500;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  color: var(--subtle);
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.lb-toggle:hover { border-color: var(--subtle); color: var(--text); }
-
-.lb-toggle--on {
-  background: #1a472a;
-  border-color: #1a472a;
-  color: #fff;
+  margin-bottom: 0.75rem;
 }
 
 .lb-section-title {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 600;
+  font-family: 'EB Garamond', serif;
+  color: var(--masters-green);
   margin: 0 0 4px;
+  letter-spacing: 0.01em;
 }
 
 .lb-section-sub {
   font-size: 12px;
   color: var(--subtle);
-  margin: 0 0 1rem;
+  margin: 0;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -99,8 +110,31 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #1a472a;
+  background: var(--masters-green);
   flex-shrink: 0;
+}
+
+.lb-toggle {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  background: transparent;
+  border: 1px solid var(--masters-green);
+  border-radius: 20px;
+  color: var(--masters-green);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.lb-toggle:hover {
+  background: var(--masters-green-light);
+}
+
+.lb-toggle--on {
+  background: var(--masters-green);
+  color: #fff;
 }
 
 /* â”€â”€ Golfer meta (flag + jacket) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
@@ -139,15 +173,15 @@
   flex-shrink: 0;
 }
 
-.score-pill.under { color: #1a6b34; }
-.score-pill.over  { color: #c0392b; }
+.score-pill.under { color: var(--masters-red); }
+.score-pill.over  { color: #2471a3; }
 .score-pill.even  { color: var(--text); }
 
 /* â”€â”€ Thru display â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .thru-done { font-size: 11px; color: var(--subtle); }
 .thru-dim  { font-size: 11px; color: var(--subtle); }
-.thru-cut  { font-size: 11px; color: #c0392b; font-weight: 500; }
+.thru-cut  { font-size: 11px; color: var(--masters-red); font-weight: 500; }
 
 /* â”€â”€ Movement badges â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
@@ -159,7 +193,7 @@
 }
 
 .mv-up   { color: #27ae60; }
-.mv-down { color: #e74c3c; }
+.mv-down { color: var(--masters-red); }
 .mv-flat { color: var(--subtle); }
 
 /* â”€â”€ Sweepstake cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
@@ -173,7 +207,7 @@
   overflow: hidden;
 }
 
-.sw-card--elim { opacity: 0.5; }
+.sw-card--elim { opacity: 0.45; }
 
 .sw-header {
   width: 100%;
@@ -186,14 +220,22 @@
   cursor: pointer;
   text-align: left;
   color: var(--text);
+  transition: background 0.1s;
 }
 
-.sw-header:hover { background: var(--bg); }
+.sw-header:hover { background: var(--masters-green-light); }
+
+/* Green tint on open entrant row â€” distinguishes entrant from picks */
+.sw-card--open > .sw-header {
+  background: var(--masters-green-light);
+  border-bottom: 1px solid rgba(26,71,42,0.15);
+}
 
 .sw-pos {
   font-size: 12px;
   font-weight: 600;
   min-width: 26px;
+  color: var(--masters-green);
 }
 
 .sw-name {
@@ -206,7 +248,7 @@
 .sw-elim {
   font-size: 10px;
   background: #fdecea;
-  color: #c0392b;
+  color: var(--masters-red);
   padding: 2px 8px;
   border-radius: 10px;
   font-weight: 500;
@@ -222,7 +264,8 @@
 
 .sw-chevron {
   font-size: 9px;
-  color: var(--subtle);
+  color: var(--masters-green);
+  opacity: 0.6;
   flex-shrink: 0;
 }
 
@@ -281,10 +324,10 @@
   display: flex;
   justify-content: space-between;
   padding: 8px 14px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid rgba(26,71,42,0.1);
   font-size: 11px;
   color: var(--subtle);
-  background: var(--bg);
+  background: var(--masters-green-light);
 }
 
 /* â”€â”€ Masters table â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
@@ -294,6 +337,7 @@
   -webkit-overflow-scrolling: touch;
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  overflow: hidden;
 }
 
 .masters-table {
@@ -304,26 +348,27 @@
 }
 
 .masters-table thead th {
-  padding: 8px 12px;
+  padding: 9px 12px;
   text-align: left;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--subtle);
-  border-bottom: 1px solid var(--border);
-  background: var(--bg);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+  background: var(--masters-green);
   white-space: nowrap;
 }
 
 .masters-table tbody tr td {
-  padding: 8px 12px;
+  padding: 9px 12px;
   border-bottom: 1px solid var(--border);
   vertical-align: middle;
 }
 
 .masters-table tbody tr:last-child td { border-bottom: none; }
 
-.masters-row--highlight td { background: #f0f7f3; }
-.masters-row--cut { opacity: 0.4; }
+.masters-row--highlight td { background: var(--masters-green-light); }
+.masters-row--cut { opacity: 0.35; }
 
 .masters-pos {
   font-size: 12px;
@@ -345,7 +390,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #1a472a;
+  background: var(--masters-green);
   flex-shrink: 0;
 }
 
@@ -361,20 +406,20 @@
 
 .lb-pre-tourney {
   text-align: center;
-  padding: 3rem 1rem;
+  padding: 4rem 1rem;
   color: var(--subtle);
 }
 
 .lb-pre-icon {
-  font-size: 36px;
-  margin-bottom: 12px;
+  font-size: 40px;
+  margin-bottom: 14px;
 }
 
 /* â”€â”€ Clickable rows â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .masters-row--clickable { cursor: pointer; }
-.masters-row--clickable:hover td { background: var(--bg); }
-.masters-row--open td { background: var(--bg); }
+.masters-row--clickable:hover td { background: var(--masters-green-light); }
+.masters-row--open td { background: var(--masters-green-light); }
 
 .masters-chevron {
   font-size: 8px;
@@ -388,29 +433,29 @@
 .masters-scorecard-row td { padding: 0; }
 
 .masters-scorecard-cell {
-  background: var(--bg);
+  background: var(--masters-cream);
   border-bottom: 1px solid var(--border);
 }
 
 .sc-loading {
-  padding: 12px 16px;
+  padding: 14px 16px;
   font-size: 12px;
   color: var(--subtle);
   font-style: italic;
 }
 
-.sc-wrap { padding: 12px 16px; overflow-x: auto; }
+.sc-wrap { padding: 14px 16px; overflow-x: auto; }
 
-.sc-round { margin-bottom: 16px; }
+.sc-round { margin-bottom: 18px; }
 .sc-round:last-child { margin-bottom: 0; }
 
 .sc-round-label {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--subtle);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--masters-green);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 6px;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
 }
 
 .sc-grid {
@@ -430,7 +475,7 @@
   width: 60px;
   flex-shrink: 0;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--subtle);
   padding-right: 8px;
   text-align: right;
@@ -452,25 +497,24 @@
 }
 
 .sc-cell--head {
-  background: #1a472a;
+  background: var(--masters-green);
   color: #fff;
   font-size: 10px;
+  font-weight: 700;
 }
 
 .sc-cell--par {
-  background: var(--card);
+  background: #fff;
   color: var(--subtle);
   border: 0.5px solid var(--border);
   font-size: 10px;
 }
 
-.sc-cell--nine {
-  margin-right: 6px;
-}
+.sc-cell--nine { margin-right: 6px; }
 
-/* Score type colours â€” Augusta inspired */
-.sc-eagle  { background: #f5c842; color: #1a1a1a; border-radius: 50%; }
-.sc-birdie { background: #c0392b; color: #fff;    border-radius: 50%; }
+/* Augusta-style score colours */
+.sc-eagle  { background: var(--masters-gold); color: #1a1a1a; border-radius: 50%; }
+.sc-birdie { background: var(--masters-red);  color: #fff;    border-radius: 50%; }
 .sc-par    { background: transparent; color: var(--text); }
 .sc-bogey  { background: transparent; color: var(--text); border: 1.5px solid var(--subtle); }
 .sc-double { background: #2471a3; color: #fff; }
@@ -479,15 +523,17 @@
 
 @media (max-width: 600px) {
   .lb-banner {
-    flex-direction: column;
-    gap: 6px;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
   }
 
-  .sw-pick-tier {
-    display: none;
+  .lb-banner-right {
+    grid-column: 1 / -1;
+    text-align: left;
   }
 
-  .sw-header {
-    gap: 6px;
-  }
+  .lb-banner-logo { height: 28px; }
+
+  .sw-pick-tier { display: none; }
+  .sw-header { gap: 6px; }
 }
