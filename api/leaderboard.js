@@ -22,7 +22,7 @@ export default async function handler(req, res) {
       id: c.athlete?.id,
       name: c.athlete?.displayName || '',
       position: c.status?.position?.displayName || '—',
-      score: c.status?.displayValue || 'E',
+      score: c.score?.displayValue || 'E',
       thru: c.status?.thru || '',
       round: c.status?.period || 1,
       status: c.status?.type?.name || 'STATUS_ACTIVE',
