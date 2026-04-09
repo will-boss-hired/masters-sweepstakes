@@ -75,6 +75,90 @@
   margin-bottom: 1rem;
 }
 
+/* â”€â”€ Tournament status bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.lb-tourney-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  margin-bottom: 1.5rem;
+  background: var(--masters-green-light);
+  border: 1px solid rgba(26,71,42,0.2);
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--masters-green);
+}
+
+.lb-tourney-status--pre {
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  background: var(--masters-green);
+  color: #fff;
+  border: none;
+}
+
+.lb-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #27ae60;
+  flex-shrink: 0;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.8); }
+}
+
+.lb-live-text { font-weight: 500; }
+
+.lb-countdown-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.lb-countdown-timer {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.lb-countdown-digits {
+  font-size: 28px;
+  font-weight: 600;
+  font-family: 'EB Garamond', serif;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.lb-countdown-unit {
+  font-size: 11px;
+  opacity: 0.65;
+  margin-right: 6px;
+  font-weight: 500;
+}
+
+.lb-countdown-sub {
+  font-size: 12px;
+  opacity: 0.65;
+}
+
+/* â”€â”€ Tee time display â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.thru-tee {
+  font-size: 11px;
+  color: var(--masters-green);
+  font-weight: 500;
+}
+
 /* â”€â”€ Sections â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .lb-section { margin-bottom: 2.5rem; }
