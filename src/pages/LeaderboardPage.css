@@ -1,0 +1,345 @@
+.lb-wrap { padding-bottom: 2rem; }
+
+/* â”€â”€ Banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.lb-banner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: #1a472a;
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 1.5rem;
+}
+
+.lb-banner-title {
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'EB Garamond', serif;
+  margin-bottom: 3px;
+}
+
+.lb-banner-round {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.lb-banner-meta {
+  flex-shrink: 0;
+  text-align: right;
+  padding-top: 2px;
+}
+
+.lb-refresh-status {
+  font-size: 11px;
+  opacity: 0.65;
+}
+
+.lb-error {
+  border: 1px solid #e74c3c;
+  color: #c0392b;
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-bottom: 1rem;
+}
+
+/* â”€â”€ Sections â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.lb-section { margin-bottom: 2.5rem; }
+
+.lb-section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.lb-section-sub {
+  font-size: 12px;
+  color: var(--subtle);
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #1a472a;
+  flex-shrink: 0;
+}
+
+/* â”€â”€ Score pills â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.score-pill {
+  font-size: 13px;
+  font-weight: 600;
+  min-width: 36px;
+  text-align: right;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.score-pill.under { color: #1a6b34; }
+.score-pill.over  { color: #c0392b; }
+.score-pill.even  { color: var(--text); }
+
+/* â”€â”€ Thru display â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.thru-done { font-size: 11px; color: var(--subtle); }
+.thru-dim  { font-size: 11px; color: var(--subtle); }
+.thru-cut  { font-size: 11px; color: #c0392b; font-weight: 500; }
+
+/* â”€â”€ Movement badges â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.mv {
+  font-size: 10px;
+  font-weight: 500;
+  min-width: 28px;
+  flex-shrink: 0;
+}
+
+.mv-up   { color: #27ae60; }
+.mv-down { color: #e74c3c; }
+.mv-flat { color: var(--subtle); }
+
+/* â”€â”€ Sweepstake cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.sw-list { display: flex; flex-direction: column; gap: 6px; }
+
+.sw-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.sw-card--elim { opacity: 0.5; }
+
+.sw-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text);
+}
+
+.sw-header:hover { background: var(--bg); }
+
+.sw-pos {
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 26px;
+}
+
+.sw-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'EB Garamond', serif;
+}
+
+.sw-elim {
+  font-size: 10px;
+  background: #fdecea;
+  color: #c0392b;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.sw-pending {
+  font-size: 14px;
+  color: var(--subtle);
+  min-width: 36px;
+  text-align: right;
+}
+
+.sw-chevron {
+  font-size: 9px;
+  color: var(--subtle);
+  flex-shrink: 0;
+}
+
+/* â”€â”€ Expanded picks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.sw-body { border-top: 1px solid var(--border); }
+
+.sw-picks { padding: 6px 14px; }
+
+.sw-pick {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.sw-pick:last-child { border-bottom: none; }
+
+.sw-pick--dim { opacity: 0.35; }
+
+.sw-pick-accent {
+  width: 3px;
+  height: 26px;
+  background: #1a472a;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.sw-pick--dim .sw-pick-accent { opacity: 0.3; }
+
+.sw-pick-tier {
+  font-size: 10px;
+  color: var(--subtle);
+  width: 90px;
+  flex-shrink: 0;
+}
+
+.sw-pick-name {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.sw-pick-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.sw-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #1a472a;
+  flex-shrink: 0;
+}
+
+.sw-unmatched {
+  font-size: 11px;
+  color: var(--subtle);
+  font-style: italic;
+}
+
+.sw-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 14px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--subtle);
+  background: var(--bg);
+}
+
+/* â”€â”€ Masters table â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.masters-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.masters-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 520px;
+}
+
+.masters-table thead th {
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--subtle);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  white-space: nowrap;
+}
+
+.masters-table tbody tr td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.masters-table tbody tr:last-child td { border-bottom: none; }
+
+.masters-row--highlight td { background: #f0f7f3; }
+.masters-row--cut { opacity: 0.4; }
+
+.masters-pos {
+  font-size: 12px;
+  color: var(--subtle);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.masters-player {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.masters-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #1a472a;
+  flex-shrink: 0;
+}
+
+.masters-thru { color: var(--subtle); }
+
+.masters-round {
+  font-size: 12px;
+  color: var(--subtle);
+  text-align: center;
+}
+
+/* â”€â”€ Pre-tournament placeholder â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.lb-pre-tourney {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--subtle);
+}
+
+.lb-pre-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+/* â”€â”€ Responsive â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+@media (max-width: 600px) {
+  .lb-banner {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .sw-pick-tier {
+    display: none;
+  }
+
+  .sw-header {
+    gap: 6px;
+  }
+}
