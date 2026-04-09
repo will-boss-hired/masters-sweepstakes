@@ -153,6 +153,9 @@ export default function LeaderboardPage() {
   const [error, setError] = useState(null)
   const [expandedIds, setExpandedIds] = useState(new Set())
   const [sweepstakeOnly, setSweepstakeOnly] = useState(false)
+  const [expandedGolferIds, setExpandedGolferIds] = useState(new Set())
+  const [scorecardCache, setScorecardCache] = useState({})
+  const [loadingScorecards, setLoadingScorecards] = useState(new Set())
   const prevPositionsRef = useRef({})
 
   useEffect(() => {
@@ -182,7 +185,7 @@ export default function LeaderboardPage() {
       const data = await res.json()
       if (data.error) throw new Error(data.error)
       setGolfers(data.golfers || [])
-      setEventInfo({ name: data.eventName, round: data.roundInfo, status: data.eventStatus })
+      setEventInfo({ name: data.eventName, round: data.roundInfo, status: data.eventStatus, id: data.eventId })
       setLastUpdated(new Date())
       setError(null)
     } catch {
@@ -236,6 +239,31 @@ export default function LeaderboardPage() {
       next.has(id) ? next.delete(id) : next.add(id)
       return next
     })
+  }
+
+  async function toggleGolfer(golferId, eventId) {
+    setExpandedGolferIds(prev => {
+      const next = new Set(prev)
+      next.has(golferId) ? next.delete(golferId) : next.add(golferId)
+      return next
+    })
+    // Fetch scorecard if not cached yet
+    if (!scorecardCache[golferId]) {
+      setLoadingScorecards(prev => new Set(prev).add(golferId))
+      try {
+        const res = await fetch(`/api/scorecard?player=${golferId}&event=${eventId}`)
+        const data = await res.json()
+        setScorecardCache(prev => ({ ...prev, [golferId]: data }))
+      } catch {
+        setScorecardCache(prev => ({ ...prev, [golferId]: { error: true } }))
+      } finally {
+        setLoadingScorecards(prev => {
+          const next = new Set(prev)
+          next.delete(golferId)
+          return next
+        })
+      }
+    }
   }
 
   if (loading) return <div className="loading">Loading leaderboard…</div>
@@ -346,7 +374,7 @@ export default function LeaderboardPage() {
             <div>
               <h2 className="lb-section-title">Masters leaderboard</h2>
               <p className="lb-section-sub">
-                <span className="legend-dot" /> Golfer picked in the sweepstake
+                <span className="legend-dot" /> Picked in sweepstake · Tap a row to see hole-by-hole scorecard
               </p>
             </div>
             <button
@@ -374,33 +402,99 @@ export default function LeaderboardPage() {
                 {golfers
                   .filter(g => !sweepstakeOnly || sweepstakeNames.has(normalizeName(g.name)))
                   .map((g, i) => {
-                  const inSweepstake = sweepstakeNames.has(normalizeName(g.name))
-                  const missed = MISSED_CUT.has(g.status)
-                  const scoreNum = parseScore(g.score)
-                  return (
-                    <tr
-                      key={g.id || i}
-                      className={`${inSweepstake ? 'masters-row--highlight' : ''}${missed ? ' masters-row--cut' : ''}`}
-                    >
-                      <td className="masters-pos">{missed ? 'CUT' : g.position}</td>
-                      <td className="masters-player">
-                        {inSweepstake && <span className="masters-dot" />}
-                        {g.name}
-                      </td>
-                      <td>
-                        <ScorePill score={scoreNum} />
-                      </td>
-                      <td className="masters-thru">
-                        <ThruCell thru={g.thru} status={g.status} />
-                      </td>
-                      {[0, 1, 2, 3].map(r => (
-                        <td key={r} className="masters-round">
-                          {g.linescores?.[r]?.display || '—'}
-                        </td>
-                      ))}
-                    </tr>
-                  )
-                })}
+                    const inSweepstake = sweepstakeNames.has(normalizeName(g.name))
+                    const missed = MISSED_CUT.has(g.status)
+                    const scoreNum = parseScore(g.score)
+                    const isGolferExpanded = expandedGolferIds.has(g.id)
+                    const isLoadingCard = loadingScorecards.has(g.id)
+                    const scorecard = scorecardCache[g.id]
+                    const eventId = eventInfo?.id || '401811941'
+
+                    return (
+                      <>
+                        <tr
+                          key={g.id || i}
+                          className={`masters-row--clickable${inSweepstake ? ' masters-row--highlight' : ''}${missed ? ' masters-row--cut' : ''}${isGolferExpanded ? ' masters-row--open' : ''}`}
+                          onClick={() => toggleGolfer(g.id, eventId)}
+                        >
+                          <td className="masters-pos">{missed ? 'CUT' : g.position}</td>
+                          <td className="masters-player">
+                            {inSweepstake && <span className="masters-dot" />}
+                            {g.name}
+                            <span className="masters-chevron">{isGolferExpanded ? '▲' : '▼'}</span>
+                          </td>
+                          <td><ScorePill score={scoreNum} /></td>
+                          <td className="masters-thru">
+                            <ThruCell thru={g.thru} status={g.status} />
+                          </td>
+                          {[0, 1, 2, 3].map(r => (
+                            <td key={r} className="masters-round">
+                              {g.linescores?.[r]?.display || '—'}
+                            </td>
+                          ))}
+                        </tr>
+                        {isGolferExpanded && (
+                          <tr key={`${g.id}-card`} className="masters-scorecard-row">
+                            <td colSpan={8} className="masters-scorecard-cell">
+                              {isLoadingCard && (
+                                <div className="sc-loading">Loading scorecard…</div>
+                              )}
+                              {!isLoadingCard && scorecard?.error && (
+                                <div className="sc-loading">Scorecard unavailable</div>
+                              )}
+                              {!isLoadingCard && scorecard && !scorecard.error && scorecard.rounds?.length === 0 && (
+                                <div className="sc-loading">No scores yet — round hasn't started</div>
+                              )}
+                              {!isLoadingCard && scorecard && !scorecard.error && scorecard.rounds?.length > 0 && (
+                                <div className="sc-wrap">
+                                  {scorecard.rounds.map(round => (
+                                    <div key={round.period} className="sc-round">
+                                      <div className="sc-round-label">Round {round.period}</div>
+                                      <div className="sc-grid">
+                                        <div className="sc-row sc-row--header">
+                                          <div className="sc-corner">Hole</div>
+                                          {round.holes.map(h => (
+                                            <div key={h.number} className={`sc-cell sc-cell--head${h.number === 9 ? ' sc-cell--nine' : ''}`}>
+                                              {h.number}
+                                            </div>
+                                          ))}
+                                        </div>
+                                        <div className="sc-row sc-row--par">
+                                          <div className="sc-corner">Par</div>
+                                          {round.holes.map(h => (
+                                            <div key={h.number} className={`sc-cell sc-cell--par${h.number === 9 ? ' sc-cell--nine' : ''}`}>
+                                              {h.par ?? '—'}
+                                            </div>
+                                          ))}
+                                        </div>
+                                        <div className="sc-row sc-row--scores">
+                                          <div className="sc-corner">{g.name.split(' ').pop()}</div>
+                                          {round.holes.map(h => {
+                                            const t = h.toPar
+                                            const cls = t == null ? ''
+                                              : t <= -2 ? 'sc-eagle'
+                                              : t === -1 ? 'sc-birdie'
+                                              : t === 0 ? 'sc-par'
+                                              : t === 1 ? 'sc-bogey'
+                                              : 'sc-double'
+                                            return (
+                                              <div key={h.number} className={`sc-cell sc-cell--score ${cls}${h.number === 9 ? ' sc-cell--nine' : ''}`}>
+                                                {h.score ?? '—'}
+                                              </div>
+                                            )
+                                          })}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </td>
+                          </tr>
+                        )}
+                      </>
+                    )
+                  })}
               </tbody>
             </table>
           </div>
