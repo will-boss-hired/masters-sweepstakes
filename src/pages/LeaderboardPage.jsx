@@ -514,10 +514,10 @@ export default function LeaderboardPage() {
                   <th>Player</th>
                   <th>Score</th>
                   <th>Thru / Tee</th>
-                  <th>R1</th>
-                  <th>R2</th>
-                  <th>R3</th>
-                  <th>R4</th>
+                  <th className="col-r1">R1</th>
+                  <th className="col-r2">R2</th>
+                  <th className="col-r3">R3</th>
+                  <th className="col-r4">R4</th>
                 </tr>
               </thead>
               <tbody>
@@ -551,7 +551,7 @@ export default function LeaderboardPage() {
                             <ThruCell thru={g.thru} status={g.status} teeTime={g.teeTime} />
                           </td>
                           {[0, 1, 2, 3].map(r => (
-                            <td key={r} className="masters-round">
+                            <td key={r} className={`masters-round col-r${r + 1}`}>
                               {g.linescores?.[r]?.display || '—'}
                             </td>
                           ))}
