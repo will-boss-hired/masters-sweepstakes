@@ -21,6 +21,8 @@ export default async function handler(req, res) {
     const golfers = (comp?.competitors || []).map(c => ({
       id: c.athlete?.id,
       name: c.athlete?.displayName || '',
+      flag: c.athlete?.flag?.href || null,
+      flagAlt: c.athlete?.flag?.alt || '',
       position: c.status?.position?.displayName || '—',
       score: c.score?.displayValue || 'E',
       thru: c.status?.thru || '',
