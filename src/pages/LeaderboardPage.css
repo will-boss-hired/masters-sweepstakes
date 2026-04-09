@@ -217,17 +217,12 @@
 
 .sw-pick:last-child { border-bottom: none; }
 
-.sw-pick--dim { opacity: 0.35; }
-
 .sw-pick-accent {
   width: 3px;
   height: 26px;
-  background: #1a472a;
   border-radius: 2px;
   flex-shrink: 0;
 }
-
-.sw-pick--dim .sw-pick-accent { opacity: 0.3; }
 
 .sw-pick-tier {
   font-size: 10px;
@@ -239,22 +234,15 @@
 .sw-pick-name {
   flex: 1;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 400;
 }
+
+.sw-pick-name--bold { font-weight: 600; }
 
 .sw-pick-right {
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-shrink: 0;
-}
-
-.sw-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #1a472a;
   flex-shrink: 0;
 }
 
