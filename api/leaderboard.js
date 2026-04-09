@@ -22,7 +22,7 @@ export default async function handler(req, res) {
       id: c.athlete?.id,
       name: c.athlete?.displayName || '',
       position: c.status?.position?.displayName || '—',
-      score: c.score?.displayValue || 'E',
+      score: c.status?.displayValue || 'E',
       thru: c.status?.thru || '',
       round: c.status?.period || 1,
       status: c.status?.type?.name || 'STATUS_ACTIVE',
@@ -35,6 +35,7 @@ export default async function handler(req, res) {
     return res.json({
       golfers,
       eventName: event.name || 'Masters Tournament',
+      eventId: event.id || null,
       roundInfo: comp?.status?.type?.detail || '',
       eventStatus: comp?.status?.type?.name || '',
       lastUpdated: new Date().toISOString(),
