@@ -469,13 +469,13 @@
   white-space: nowrap;
 }
 
-.masters-dot {
+.masters-tier-bar {
   display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--masters-green);
+  width: 3px;
+  height: 28px;
+  border-radius: 2px;
   flex-shrink: 0;
+  margin-right: 4px;
 }
 
 .masters-thru { color: var(--subtle); }
