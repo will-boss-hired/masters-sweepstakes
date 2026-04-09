@@ -639,4 +639,11 @@
   .lb-banner-logo { height: 28px; }
   .sw-pick-tier { display: none; }
   .sw-header { gap: 6px; }
+
+  /* Hide round columns â€” show only Pos, Player, Score, Thru on mobile */
+  .masters-table { min-width: 0; }
+  .masters-table .col-r1,
+  .masters-table .col-r2,
+  .masters-table .col-r3,
+  .masters-table .col-r4 { display: none; }
 }
