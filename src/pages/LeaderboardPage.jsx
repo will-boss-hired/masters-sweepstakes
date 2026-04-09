@@ -35,16 +35,17 @@ const MISSED_CUT = new Set([
   'STATUS_CUT',
 ])
 
-const PREVIOUS_WINNERS = new Set([
-  'rory mcilroy', 'jon rahm', 'scottie scheffler', 'hideki matsuyama',
-  'dustin johnson', 'patrick reed', 'sergio garcia', 'danny willett',
-  'jordan spieth', 'bubba watson', 'adam scott', 'charl schwartzel',
-  'angel cabrera', 'mike weir', 'zach johnson', 'vijay singh',
-  'jose maria olazabal', 'fred couples',
+const PREVIOUS_WINNERS = new Map([
+  ['rory mcilroy', 1], ['jon rahm', 1], ['scottie scheffler', 2],
+  ['hideki matsuyama', 1], ['dustin johnson', 1], ['patrick reed', 1],
+  ['sergio garcia', 1], ['danny willett', 1], ['jordan spieth', 1],
+  ['bubba watson', 2], ['adam scott', 1], ['charl schwartzel', 1],
+  ['angel cabrera', 1], ['mike weir', 1], ['zach johnson', 1],
+  ['vijay singh', 1], ['jose maria olazabal', 1], ['fred couples', 1],
 ])
 
-function isFormerWinner(name) {
-  return PREVIOUS_WINNERS.has(normalizeName(name))
+function winCount(name) {
+  return PREVIOUS_WINNERS.get(normalizeName(name)) || 0
 }
 
 function GolferMeta({ name, flag, flagAlt }) {
@@ -58,12 +59,11 @@ function GolferMeta({ name, flag, flagAlt }) {
           onError={e => { e.target.style.display = 'none' }}
         />
       )}
-      {isFormerWinner(name) && (
-        <span className="golfer-jacket" title="Former Masters champion">🏆</span>
-      )}
-    </span>
-  )
-}
+    {winCount(name) > 0 && (
+  <span className="golfer-jacket" title="Former Masters champion">
+    {'🏆'.repeat(winCount(name))}
+  </span>
+)}
 
 // ── Scoring engine ─────────────────────────────────────────────────────────
 
