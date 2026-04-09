@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { supabase } from '../lib/supabase'
-import { COLUMNS } from '../lib/golfers'
 import './LeaderboardPage.css'
 
 // ── Utilities ──────────────────────────────────────────────────────────────
@@ -34,6 +33,36 @@ const MISSED_CUT = new Set([
   'STATUS_DISQUALIFIED',
   'STATUS_CUT',
 ])
+
+const PREVIOUS_WINNERS = new Set([
+  'rory mcilroy', 'jon rahm', 'scottie scheffler', 'hideki matsuyama',
+  'dustin johnson', 'patrick reed', 'sergio garcia', 'danny willett',
+  'jordan spieth', 'bubba watson', 'adam scott', 'charl schwartzel',
+  'angel cabrera', 'mike weir', 'zach johnson', 'vijay singh',
+  'jose maria olazabal', 'fred couples',
+])
+
+function isFormerWinner(name) {
+  return PREVIOUS_WINNERS.has(normalizeName(name))
+}
+
+function GolferMeta({ name, flag, flagAlt }) {
+  return (
+    <span className="golfer-meta">
+      {flag && (
+        <img
+          src={flag}
+          alt={flagAlt}
+          className="golfer-flag"
+          onError={e => { e.target.style.display = 'none' }}
+        />
+      )}
+      {isFormerWinner(name) && (
+        <span className="golfer-jacket" title="Former Masters champion">🏆</span>
+      )}
+    </span>
+  )
+}
 
 // ── Scoring engine ─────────────────────────────────────────────────────────
 
@@ -331,7 +360,9 @@ export default function LeaderboardPage() {
                 {isExpanded && (
                   <div className="sw-body">
                     <div className="sw-picks">
-                      {entry.picks.map((pick, i) => (
+                      {entry.picks.map((pick, i) => {
+                        const golferData = golferMap.get(normalizeName(pick.name))
+                        return (
                         <div
                           key={i}
                           className={`sw-pick${pick.counting ? ' sw-pick--counting' : ''}`}
@@ -341,7 +372,14 @@ export default function LeaderboardPage() {
                             style={{ background: COLUMNS[pick.columnIndex]?.color || '#1a472a' }}
                           />
                           <div className="sw-pick-tier">{pick.columnName}</div>
-                          <div className={`sw-pick-name${pick.counting ? ' sw-pick-name--bold' : ''}`}>{pick.name}</div>
+                          <div className={`sw-pick-name${pick.counting ? ' sw-pick-name--bold' : ''}`}>
+                            {pick.name}
+                            <GolferMeta
+                              name={pick.name}
+                              flag={golferData?.flag || null}
+                              flagAlt={golferData?.flagAlt || ''}
+                            />
+                          </div>
                           <div className="sw-pick-right">
                             {pick.found ? (
                               <>
@@ -353,7 +391,8 @@ export default function LeaderboardPage() {
                             )}
                           </div>
                         </div>
-                      ))}
+                        )
+                      })}
                     </div>
                     <div className="sw-footer">
                       <span>{entry.madeCutCount} of 6 through cut</span>
@@ -424,6 +463,7 @@ export default function LeaderboardPage() {
                           <td className="masters-player">
                             {inSweepstake && <span className="masters-dot" />}
                             {g.name}
+                            <GolferMeta name={g.name} flag={g.flag} flagAlt={g.flagAlt} />
                             <span className="masters-chevron">{isGolferExpanded ? '▲' : '▼'}</span>
                           </td>
                           <td><ScorePill score={scoreNum} /></td>
