@@ -741,3 +741,65 @@
   opacity: 0.5;
   font-style: italic;
 }
+
+/* â”€â”€ Cut line in Masters table â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.masters-cut-line-row td { padding: 0; border-bottom: none; }
+
+.masters-cut-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  background: #fdecea;
+  border-top: 1px solid #c0392b;
+  border-bottom: 1px solid #c0392b;
+}
+
+.masters-cut-line-rule {
+  flex: 1;
+  height: 1px;
+  background: #c0392b;
+  opacity: 0.35;
+}
+
+.masters-cut-line-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #c0392b;
+  white-space: nowrap;
+}
+
+/* â”€â”€ Sweepstake picks split header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.sw-picks-header {
+  padding: 5px 14px;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--subtle);
+  background: var(--masters-green-light);
+  border-bottom: 1px solid var(--border);
+}
+
+.sw-picks-header--missed {
+  color: var(--masters-red);
+  background: #fdecea;
+}
+
+/* â”€â”€ Missed cut pick row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.sw-pick--missed {
+  opacity: 0.5;
+}
+
+.sw-cut-badge {
+  font-size: 10px;
+  background: #fdecea;
+  color: var(--masters-red);
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
