@@ -729,11 +729,12 @@
 
 .lb-commentary-text {
   font-size: 14px;
-  line-height: 1.6;
-  color: #fff;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.92);
   margin: 0;
-  font-family: 'EB Garamond', serif;
-  font-style: italic;
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 400;
 }
 
 .lb-commentary-loading {
