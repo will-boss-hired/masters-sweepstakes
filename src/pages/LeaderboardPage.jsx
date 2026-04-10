@@ -303,7 +303,12 @@ export default function LeaderboardPage() {
     const [loadedEntries, loadedGolfers] = await Promise.all([fetchEntries(), fetchScores()])
     setLoading(false)
     if (loadedGolfers?.length && loadedEntries?.length) {
-      setTimeout(() => fetchCommentary(loadedEntries, loadedGolfers), 500)
+      // Build golfer map and compute rankings before fetching commentary
+      const gMap = new Map()
+      loadedGolfers.forEach(g => gMap.set(normalizeName(g.name), g))
+      const calc = loadedEntries.map(e => calculateEntry(e, gMap))
+      const ranked = rankEntries(calc)
+      setTimeout(() => fetchCommentary(ranked, loadedGolfers), 500)
     }
   }
 
