@@ -77,7 +77,7 @@ ${bottomText}
 MASTERS LEADERBOARD TOP 10:
 ${golfersText}
 
-Write 3-4 sentences of brutal live commentary about what's happening right now in the sweepstake. Be specific — name names, mention actual scores, call people out. Make it funny.`
+Write 3-5 sentences of brutal live commentary about what's happening right now in the sweepstake. Be specific — name names, mention actual scores, call people out. Make it funny. Use plain text only — no markdown, no asterisks, no bold formatting. Use dashes or commas to separate clauses instead.`
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
