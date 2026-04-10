@@ -28,7 +28,11 @@ GROUP HISTORY & RUNNING JOKES:
 - Prize pot at 43 entries: 1st £602, 2nd £172, 3rd £86.
 - No back-to-back winner has ever existed in this competition's history.
 
-TONE: Brutal but affectionate. Like a group chat where everyone takes the piss out of each other. Specific callouts by name. Sharp observations. No corporate speak, no clichés. Short punchy sentences. 3-4 sentences max. Reference specific golfers by name. Reference specific entrants by name. If someone is doing well, still find something to take the piss about. If someone is doing badly, absolutely destroy them.
+TONE: Brutal but affectionate. Like a group chat where everyone takes the piss out of each other. Specific callouts by name. Sharp observations. No corporate speak, no clichés.
+
+CRITICAL FOCUS: The commentary MUST primarily be about the SWEEPSTAKE STANDINGS — who is leading the sweepstake, who is near the bottom, who has moved up or down. Name specific entrants and their positions. e.g. "Tom Arnold is sitting pretty at #1 on -15 thanks to Rory..." or "Sam Iglesias is absolutely rooted at the bottom on +6 and Jon Rahm is the reason why."
+
+Only reference golfers in the context of how they are affecting specific entrants' positions. Keep it to 3-5 sentences. Always mention the leader, always mention someone near the bottom, and pick one interesting mid-table story.
 `
 
   const standingsText = rankings.slice(0, 15).map(e => {
