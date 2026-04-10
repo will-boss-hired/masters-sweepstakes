@@ -35,47 +35,27 @@ CRITICAL FOCUS: The commentary MUST primarily be about the SWEEPSTAKE STANDINGS 
 Only reference golfers in the context of how they are affecting specific entrants' positions. Keep it to 3-5 sentences. Always mention the leader, always mention someone near the bottom, and pick one interesting mid-table story.
 `
 
-  // Build golfer score map from topGolfers
-  const golferScoreMap = {}
-  ;(topGolfers || []).forEach(g => {
-    const key = g.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/['-]/g, ' ').trim()
-    golferScoreMap[key] = g.score || 'E'
-  })
-
-  function normKey(name) {
-    return (name || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/['-]/g, ' ').replace(/\s+/g, ' ').trim()
-  }
-  function parseS(str) {
-    if (!str || str === 'E' || str === 'Even') return 0
-    const n = parseInt(str.replace('+',''), 10)
-    return isNaN(n) ? 0 : n
-  }
   function fmtS(n) {
     if (n === null || n === undefined) return 'pending'
     if (n === 0) return 'E'
     return n > 0 ? `+${n}` : String(n)
   }
 
-  // Score each entry
-  const scored = (rankings || []).map(e => {
+  // Use pre-ranked standings passed from the app (already correctly scored)
+  const sorted = (rankings || []).slice().sort((a, b) => {
+    if (a.rank !== b.rank) return a.rank - b.rank
+    return (a.entrant_name || '').localeCompare(b.entrant_name || '')
+  })
+
+  const standingsText = sorted.slice(0, 15).map(e => {
     const picks = (e.picks || []).map(p => {
-      const score = parseS(golferScoreMap[normKey(p.name)])
-      return { ...p, score }
-    })
-    const sorted = [...picks].sort((a,b) => a.score - b.score)
-    const teamScore = sorted.slice(0,3).reduce((s,p) => s + p.score, 0)
-    const allSix = picks.reduce((s,p) => s + p.score, 0)
-    return { ...e, picks, teamScore, allSix }
-  }).sort((a,b) => a.teamScore - b.teamScore)
-
-  scored.forEach((e, i) => { e.rank = i + 1 })
-
-  const standingsText = scored.slice(0, 15).map(e => {
-    const picks = e.picks.map(p => `${p.name} (${fmtS(p.score)})`).join(', ')
-    return `#${e.rank} ${e.entrant_name}: team ${fmtS(e.teamScore)} all-6 ${fmtS(e.allSix)} | ${picks}`
+      const s = fmtS(p.score)
+      return `${p.name} (${s})`
+    }).join(', ')
+    return `#${e.rank} ${e.entrant_name}: team ${fmtS(e.teamScore)} all-6 ${fmtS(e.allSixScore)} | ${picks}`
   }).join('\n')
 
-  const bottomText = scored.slice(-5).reverse().map(e =>
+    const bottomText = sorted.slice(-5).reverse().map(e =>
     `#${e.rank} ${e.entrant_name}: team ${fmtS(e.teamScore)}`
   ).join('\n')
 
