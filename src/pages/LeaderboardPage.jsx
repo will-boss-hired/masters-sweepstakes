@@ -499,7 +499,21 @@ export default function LeaderboardPage() {
           {loadingCommentary && !commentary ? (
             <p className="lb-commentary-text lb-commentary-loading">Generating commentary…</p>
           ) : (
-            <p className="lb-commentary-text">{commentary}</p>
+            <div className="lb-commentary-text">
+              {commentary
+                .replace(/\*\*/g, '')
+                .split(/(?<=\.)\s+(?=[A-Z])/)
+                .reduce((acc, sentence, i, arr) => {
+                  if (i % 2 === 0) {
+                    acc.push(arr.slice(i, i + 2).join(' '))
+                  }
+                  return acc
+                }, [])
+                .map((para, i) => (
+                  <p key={i} style={{ margin: i === 0 ? 0 : '8px 0 0' }}>{para}</p>
+                ))
+              }
+            </div>
           )}
         </div>
       )}
