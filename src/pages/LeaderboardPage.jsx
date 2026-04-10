@@ -291,8 +291,10 @@ export default function LeaderboardPage() {
     initialLoad()
     const timer = setInterval(backgroundRefresh, 60_000)
     const commentaryTimer = setInterval(() => {
-      fetchCommentary(rankings, golfers)
-    }, 600_000)
+      if (eventInfo?.status === 'STATUS_IN_PROGRESS') {
+        fetchCommentary(rankings, golfers)
+      }
+    }, 1_200_000)
     return () => { clearInterval(timer); clearInterval(commentaryTimer) }
   }, [])
 
@@ -303,12 +305,14 @@ export default function LeaderboardPage() {
     const [loadedEntries, loadedGolfers] = await Promise.all([fetchEntries(), fetchScores()])
     setLoading(false)
     if (loadedGolfers?.length && loadedEntries?.length) {
-      // Build golfer map and compute rankings before fetching commentary
       const gMap = new Map()
       loadedGolfers.forEach(g => gMap.set(normalizeName(g.name), g))
       const calc = loadedEntries.map(e => calculateEntry(e, gMap))
       const ranked = rankEntries(calc)
-      setTimeout(() => fetchCommentary(ranked, loadedGolfers), 500)
+      const status = loadedGolfers[0] ? eventInfo?.status : null
+      if (!sessionStorage.getItem('sw_commentary') || status === 'STATUS_IN_PROGRESS') {
+        setTimeout(() => fetchCommentary(ranked, loadedGolfers), 500)
+      }
     }
   }
 
@@ -492,7 +496,7 @@ export default function LeaderboardPage() {
             {commentaryTime && (
               <span className="lb-commentary-time">
                 {commentaryTime.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
-                {' · updates every 10 mins'}
+                {' · updates every 20 mins'}
               </span>
             )}
           </div>
