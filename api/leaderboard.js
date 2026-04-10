@@ -19,19 +19,9 @@ export default async function handler(req, res) {
         display: ls.displayValue || '—',
       }))
 
-      // Sum the to-par displayValue of each round linescore to get live overall score.
-      // c.score.displayValue doesn't update during an active round — linescore displayValues do.
-      const validLinescores = linescores.filter(ls => ls.display && ls.display !== '—')
-      let overallScore = 'E'
-      if (validLinescores.length > 0) {
-        const total = validLinescores.reduce((sum, ls) => {
-          const str = ls.display
-          if (!str || str === 'E' || str === 'Even') return sum
-          const n = parseInt(str.replace('+', ''), 10)
-          return sum + (isNaN(n) ? 0 : n)
-        }, 0)
-        overallScore = total === 0 ? 'E' : total > 0 ? `+${total}` : String(total)
-      }
+      // ESPN's c.score.displayValue is the live overall to-par score.
+      // It updates correctly during active rounds across all rounds.
+      const overallScore = c.score?.displayValue || 'E'
 
       return {
         id: c.athlete?.id,
@@ -41,7 +31,7 @@ export default async function handler(req, res) {
         position: c.status?.position?.displayName || '—',
         score: overallScore,
         teeTime: c.status?.teeTime || null,
-        thru: c.status?.thru || '',
+        thru: c.status?.thru != null ? String(c.status.thru) : '',
         round: c.status?.period || 1,
         status: c.status?.type?.name || 'STATUS_ACTIVE',
         sortOrder: c.sortOrder || 999,
