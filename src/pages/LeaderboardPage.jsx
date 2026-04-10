@@ -300,10 +300,10 @@ export default function LeaderboardPage() {
 
   async function initialLoad() {
     setLoading(true)
-    const [_, loadedGolfers] = await Promise.all([fetchEntries(), fetchScores()])
+    const [loadedEntries, loadedGolfers] = await Promise.all([fetchEntries(), fetchScores()])
     setLoading(false)
-    if (loadedGolfers?.length) {
-      setTimeout(() => fetchCommentary(null, loadedGolfers), 500)
+    if (loadedGolfers?.length && loadedEntries?.length) {
+      setTimeout(() => fetchCommentary(loadedEntries, loadedGolfers), 500)
     }
   }
 
@@ -313,6 +313,7 @@ export default function LeaderboardPage() {
       .select('*')
       .order('created_at', { ascending: true })
     setEntries(data || [])
+    return data || []
   }
 
   async function fetchScores() {
