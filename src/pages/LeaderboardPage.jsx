@@ -273,8 +273,11 @@ export default function LeaderboardPage() {
   const [refreshing, setRefreshing] = useState(false)
   const [lastUpdated, setLastUpdated] = useState(null)
   const [error, setError] = useState(null)
-  const [commentary, setCommentary] = useState('')
-  const [commentaryTime, setCommentaryTime] = useState(null)
+  const [commentary, setCommentary] = useState(() => sessionStorage.getItem('sw_commentary') || '')
+  const [commentaryTime, setCommentaryTime] = useState(() => {
+    const t = sessionStorage.getItem('sw_commentary_time')
+    return t ? new Date(t) : null
+  })
   const [loadingCommentary, setLoadingCommentary] = useState(false)
   const [expandedIds, setExpandedIds] = useState(new Set())
   const [sweepstakeOnly, setSweepstakeOnly] = useState(false)
@@ -351,6 +354,8 @@ export default function LeaderboardPage() {
       })
       const data = await res.json()
       if (data.commentary) {
+        sessionStorage.setItem('sw_commentary', data.commentary)
+        sessionStorage.setItem('sw_commentary_time', new Date().toISOString())
         setCommentary(data.commentary)
         setCommentaryTime(new Date())
       }
