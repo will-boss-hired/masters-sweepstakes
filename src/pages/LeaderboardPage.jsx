@@ -273,6 +273,9 @@ export default function LeaderboardPage() {
   const [refreshing, setRefreshing] = useState(false)
   const [lastUpdated, setLastUpdated] = useState(null)
   const [error, setError] = useState(null)
+  const [commentary, setCommentary] = useState('')
+  const [commentaryTime, setCommentaryTime] = useState(null)
+  const [loadingCommentary, setLoadingCommentary] = useState(false)
   const [expandedIds, setExpandedIds] = useState(new Set())
   const [sweepstakeOnly, setSweepstakeOnly] = useState(false)
   const [playingOnly, setPlayingOnly] = useState(false)
@@ -284,8 +287,18 @@ export default function LeaderboardPage() {
   useEffect(() => {
     initialLoad()
     const timer = setInterval(backgroundRefresh, 60_000)
-    return () => clearInterval(timer)
+    const commentaryTimer = setInterval(() => {
+      fetchCommentary(rankings, golfers)
+    }, 600_000)
+    return () => { clearInterval(timer); clearInterval(commentaryTimer) }
   }, [])
+
+  // Fetch commentary once data is loaded
+  useEffect(() => {
+    if (rankings.length > 0 && golfers.length > 0 && !commentary) {
+      fetchCommentary(rankings, golfers)
+    }
+  }, [rankings.length, golfers.length])
 
   async function initialLoad() {
     setLoading(true)
@@ -320,6 +333,32 @@ export default function LeaderboardPage() {
     setRefreshing(true)
     await fetchScores()
     setRefreshing(false)
+  }
+
+  async function fetchCommentary(currentRankings, currentGolfers) {
+    if (!currentRankings?.length || !currentGolfers?.length) return
+    setLoadingCommentary(true)
+    try {
+      const res = await fetch('/api/commentary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          rankings: currentRankings,
+          topGolfers: currentGolfers.slice(0, 15),
+          round: eventInfo?.round || '',
+          cutLine: '+4',
+        }),
+      })
+      const data = await res.json()
+      if (data.commentary) {
+        setCommentary(data.commentary)
+        setCommentaryTime(new Date())
+      }
+    } catch (err) {
+      console.error('[commentary]', err)
+    } finally {
+      setLoadingCommentary(false)
+    }
   }
 
   const golferMap = useMemo(() => {
@@ -433,6 +472,26 @@ export default function LeaderboardPage() {
 
       {/* ── Tournament status / countdown ────────────── */}
       <TournamentStatus eventInfo={eventInfo} />
+
+      {/* ── Live commentary box ──────────────────────── */}
+      {(commentary || loadingCommentary) && (
+        <div className="lb-commentary">
+          <div className="lb-commentary-header">
+            <span className="lb-commentary-label">🎙️ Live commentary</span>
+            {commentaryTime && (
+              <span className="lb-commentary-time">
+                {commentaryTime.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+                {' · updates every 10 mins'}
+              </span>
+            )}
+          </div>
+          {loadingCommentary && !commentary ? (
+            <p className="lb-commentary-text lb-commentary-loading">Generating commentary…</p>
+          ) : (
+            <p className="lb-commentary-text">{commentary}</p>
+          )}
+        </div>
+      )}
 
       {error && <div className="lb-error">{error}</div>}
 
