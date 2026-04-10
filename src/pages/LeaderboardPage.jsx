@@ -293,17 +293,15 @@ export default function LeaderboardPage() {
     return () => { clearInterval(timer); clearInterval(commentaryTimer) }
   }, [])
 
-  // Fetch commentary once data is loaded
-  useEffect(() => {
-    if (rankings.length > 0 && golfers.length > 0 && !commentary) {
-      fetchCommentary(rankings, golfers)
-    }
-  }, [rankings.length, golfers.length])
+
 
   async function initialLoad() {
     setLoading(true)
-    await Promise.all([fetchEntries(), fetchScores()])
+    const [_, loadedGolfers] = await Promise.all([fetchEntries(), fetchScores()])
     setLoading(false)
+    if (loadedGolfers?.length) {
+      setTimeout(() => fetchCommentary(null, loadedGolfers), 500)
+    }
   }
 
   async function fetchEntries() {
@@ -324,8 +322,10 @@ export default function LeaderboardPage() {
       setEventInfo({ name: data.eventName, round: data.roundInfo, status: data.eventStatus, id: data.eventId })
       setLastUpdated(new Date())
       setError(null)
+      return data.golfers || []
     } catch {
       setError('Scores temporarily unavailable — retrying shortly')
+      return []
     }
   }
 
@@ -336,14 +336,14 @@ export default function LeaderboardPage() {
   }
 
   async function fetchCommentary(currentRankings, currentGolfers) {
-    if (!currentRankings?.length || !currentGolfers?.length) return
+    if (!currentGolfers?.length) return
     setLoadingCommentary(true)
     try {
       const res = await fetch('/api/commentary', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          rankings: currentRankings,
+          rankings: currentRankings || [],
           topGolfers: currentGolfers.slice(0, 15),
           round: eventInfo?.round || '',
           cutLine: '+4',
