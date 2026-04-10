@@ -555,32 +555,37 @@ export default function LeaderboardPage() {
 
                 {isExpanded && (
                   <div className="sw-body">
-                    <div className="sw-picks">
-                      {entry.picks.map((pick, i) => {
+                    {(() => {
+                      const throughPicks = entry.picks.filter(p => p.found && p.madeCut !== false)
+                      const missedPicks = entry.picks.filter(p => p.found && p.madeCut === false)
+                      const unknownPicks = entry.picks.filter(p => !p.found)
+                      const allThrough = [...throughPicks, ...unknownPicks]
+                      const showSplit = missedPicks.length > 0
+
+                      const renderPick = (pick, i, isMissed) => {
                         const golferData = golferMap.get(normalizeName(pick.name))
                         return (
                           <div
                             key={i}
-                            className={`sw-pick${pick.counting ? ' sw-pick--counting' : ''}`}
+                            className={`sw-pick${pick.counting ? ' sw-pick--counting' : ''}${isMissed ? ' sw-pick--missed' : ''}`}
                           >
                             <div
                               className="sw-pick-accent"
-                              style={{ background: COLUMNS[pick.columnIndex]?.color || '#1a472a' }}
+                              style={{ background: isMissed ? '#aaa' : (COLUMNS[pick.columnIndex]?.color || '#1a472a') }}
                             />
                             <div className="sw-pick-tier">{pick.columnName}</div>
                             <div className={`sw-pick-name${pick.counting ? ' sw-pick-name--bold' : ''}`}>
                               {pick.name}
-                              <GolferMeta
-                                name={pick.name}
-                                flag={golferData?.flag || null}
-                                flagAlt={golferData?.flagAlt || ''}
-                              />
+                              {!isMissed && <GolferMeta name={pick.name} flag={golferData?.flag || null} flagAlt={golferData?.flagAlt || ''} />}
                             </div>
                             <div className="sw-pick-right">
                               {pick.found ? (
                                 <>
                                   <ScorePill score={pick.score} />
-                                  <ThruCell thru={pick.thru} status={pick.statusName} teeTime={golferData?.teeTime} />
+                                  {isMissed
+                                    ? <span className="sw-cut-badge">CUT</span>
+                                    : <ThruCell thru={pick.thru} status={pick.statusName} teeTime={golferData?.teeTime} />
+                                  }
                                 </>
                               ) : (
                                 <span className="sw-unmatched">not started</span>
@@ -588,8 +593,23 @@ export default function LeaderboardPage() {
                             </div>
                           </div>
                         )
-                      })}
-                    </div>
+                      }
+
+                      return (
+                        <div className="sw-picks">
+                          {showSplit && (
+                            <div className="sw-picks-header">{allThrough.length} through cut</div>
+                          )}
+                          {allThrough.map((pick, i) => renderPick(pick, i, false))}
+                          {showSplit && (
+                            <>
+                              <div className="sw-picks-header sw-picks-header--missed">{missedPicks.length} missed cut</div>
+                              {missedPicks.map((pick, i) => renderPick(pick, `m${i}`, true))}
+                            </>
+                          )}
+                        </div>
+                      )
+                    })()}
                     <div className="sw-footer">
                       <span>{entry.madeCutCount} of 6 through cut</span>
                       <span>
@@ -647,12 +667,16 @@ export default function LeaderboardPage() {
                 </tr>
               </thead>
               <tbody>
-                {golfers
-                  .filter(g => !sweepstakeOnly || sweepstakeNames.has(normalizeName(g.name)))
-                  .filter(g => !playingOnly || g.status === 'STATUS_IN_PROGRESS')
-                  .map((g, i) => {
+                {(() => {
+                  const filtered = golfers
+                    .filter(g => !sweepstakeOnly || sweepstakeNames.has(normalizeName(g.name)))
+                    .filter(g => !playingOnly || g.status === 'STATUS_IN_PROGRESS')
+                  let cutLineInserted = false
+                  return filtered.map((g, i) => {
                     const inSweepstake = sweepstakeNames.has(normalizeName(g.name))
                     const missed = MISSED_CUT.has(g.status)
+                    const showCutLine = missed && !cutLineInserted && !playingOnly
+                    if (showCutLine) cutLineInserted = true
                     const scoreNum = parseScore(g.score)
                     const isGolferExpanded = expandedGolferIds.has(g.id)
                     const isLoadingCard = loadingScorecards.has(g.id)
@@ -661,6 +685,17 @@ export default function LeaderboardPage() {
 
                     return (
                       <>
+                        {showCutLine && (
+                          <tr key="cut-line" className="masters-cut-line-row">
+                            <td colSpan={8}>
+                              <div className="masters-cut-line">
+                                <div className="masters-cut-line-rule" />
+                                <span className="masters-cut-line-label">Cut line</span>
+                                <div className="masters-cut-line-rule" />
+                              </div>
+                            </td>
+                          </tr>
+                        )}
                         <tr
                           key={g.id || i}
                           className={`masters-row--clickable${inSweepstake ? ' masters-row--highlight' : ''}${missed ? ' masters-row--cut' : ''}${isGolferExpanded ? ' masters-row--open' : ''}`}
@@ -777,7 +812,8 @@ export default function LeaderboardPage() {
                         )}
                       </>
                     )
-                  })}
+                  })
+                })()}
               </tbody>
             </table>
           </div>
