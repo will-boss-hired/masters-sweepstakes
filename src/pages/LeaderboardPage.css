@@ -1,4 +1,4 @@
-/* â”€â”€ Masters palette â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Masters palette â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 :root {
   --masters-green:      #1a472a;
   --masters-green-mid:  #2d6a3e;
@@ -11,7 +11,7 @@
 
 .lb-wrap { padding-bottom: 3rem; }
 
-/* â”€â”€ Banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .lb-banner {
   display: grid;
@@ -75,7 +75,7 @@
   margin-bottom: 1rem;
 }
 
-/* â”€â”€ Tournament status bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Tournament status bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .lb-tourney-status {
   display: flex;
@@ -151,7 +151,7 @@
   opacity: 0.65;
 }
 
-/* â”€â”€ Tee time display â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Tee time display â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .thru-tee {
   font-size: 11px;
@@ -159,7 +159,7 @@
   font-weight: 500;
 }
 
-/* â”€â”€ Sections â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Sections â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .lb-section { margin-bottom: 2.5rem; }
 
@@ -221,7 +221,7 @@
   color: #fff;
 }
 
-/* â”€â”€ Golfer meta (flag + jacket) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Golfer meta (flag + jacket) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .golfer-meta {
   display: inline-flex;
@@ -246,7 +246,7 @@
   line-height: 1;
 }
 
-/* â”€â”€ Score pills â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Score pills â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .score-pill {
   font-size: 13px;
@@ -261,13 +261,13 @@
 .score-pill.over  { color: #2471a3; }
 .score-pill.even  { color: var(--text); }
 
-/* â”€â”€ Thru display â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Thru display â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .thru-done { font-size: 11px; color: var(--subtle); }
 .thru-dim  { font-size: 11px; color: var(--subtle); }
 .thru-cut  { font-size: 11px; color: var(--masters-red); font-weight: 500; }
 
-/* â”€â”€ Movement badges â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Movement badges â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .mv {
   font-size: 10px;
@@ -280,7 +280,7 @@
 .mv-down { color: var(--masters-red); }
 .mv-flat { color: var(--subtle); }
 
-/* â”€â”€ Sweepstake cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Sweepstake cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .sw-list { display: flex; flex-direction: column; gap: 6px; }
 
@@ -309,7 +309,6 @@
 
 .sw-header:hover { background: var(--masters-green-light); }
 
-/* Green tint on open entrant row â€” distinguishes entrant from picks */
 .sw-card--open > .sw-header {
   background: var(--masters-green-light);
   border-bottom: 1px solid rgba(26,71,42,0.15);
@@ -353,7 +352,7 @@
   flex-shrink: 0;
 }
 
-/* â”€â”€ Expanded picks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Expanded picks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .sw-body { border-top: 1px solid var(--border); }
 
@@ -414,7 +413,9 @@
   background: var(--masters-green-light);
 }
 
-/* â”€â”€ Masters table â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.sw-footer-allsix { color: var(--subtle); }
+
+/* â”€â”€ Masters table â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .masters-wrap {
   overflow-x: auto;
@@ -486,7 +487,7 @@
   text-align: center;
 }
 
-/* â”€â”€ Pre-tournament placeholder â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Pre-tournament placeholder â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .lb-pre-tourney {
   text-align: center;
@@ -499,7 +500,7 @@
   margin-bottom: 14px;
 }
 
-/* â”€â”€ Clickable rows â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Clickable rows â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .masters-row--clickable { cursor: pointer; }
 .masters-row--clickable:hover td { background: var(--masters-green-light); }
@@ -512,7 +513,7 @@
   vertical-align: middle;
 }
 
-/* â”€â”€ Scorecard expansion â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Scorecard expansion â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .masters-scorecard-row td { padding: 0; }
 
@@ -596,14 +597,63 @@
 
 .sc-cell--nine { margin-right: 6px; }
 
-/* Augusta-style score colours */
 .sc-eagle  { background: var(--masters-gold); color: #1a1a1a; border-radius: 50%; }
 .sc-birdie { background: var(--masters-red);  color: #fff;    border-radius: 50%; }
 .sc-par    { background: transparent; color: var(--text); }
 .sc-bogey  { background: transparent; color: var(--text); border: 1.5px solid var(--subtle); }
 .sc-double { background: #2471a3; color: #fff; }
 
-/* â”€â”€ Two-column desktop layout â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Picked by section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.sc-picked-by {
+  border-top: 0.5px solid var(--border);
+  margin: 0 16px 14px;
+  padding-top: 12px;
+}
+
+.sc-picked-by-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--masters-green);
+  margin-bottom: 6px;
+}
+
+.sc-pb-row {
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.sc-pb-row:last-child { border-bottom: none; }
+
+.sc-pb-rank {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--masters-green);
+  min-width: 36px;
+}
+
+.sc-pb-name {
+  font-size: 13px;
+  color: var(--text);
+  flex: 1;
+}
+
+.sc-pb-score {
+  font-size: 13px;
+  font-weight: 600;
+  min-width: 36px;
+  text-align: right;
+}
+
+.sc-pb-score--under { color: var(--masters-red); }
+.sc-pb-score--over  { color: #2471a3; }
+.sc-pb-score--even  { color: var(--subtle); }
+
+/* â”€â”€ Two-column desktop layout â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .lb-grid {
   display: grid;
@@ -612,7 +662,7 @@
   align-items: start;
 }
 
-/* â”€â”€ Responsive â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€ Responsive â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 @media (max-width: 900px) {
   .lb-grid {
@@ -640,54 +690,53 @@
   .sw-pick-tier { display: none; }
   .sw-header { gap: 6px; }
 
-  /* Hide round columns â€” show only Pos, Player, Score, Thru on mobile */
   .masters-table { min-width: 0; }
   .masters-table .col-r1,
   .masters-table .col-r2,
   .masters-table .col-r3,
   .masters-table .col-r4 { display: none; }
 }
-.sc-picked-by {
-  border-top: 0.5px solid var(--color-border-tertiary);
-  margin-top: 12px;
-  padding-top: 12px;
+
+/* â”€â”€ Live commentary box â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.lb-commentary {
+  background: var(--masters-green);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 1.5rem;
 }
-.sc-picked-by-label {
-  font-size: 11px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--color-text-secondary);
-  margin-bottom: 6px;
-}
-.sc-pb-row {
+
+.lb-commentary-header {
   display: flex;
   align-items: center;
-  padding: 6px 0;
-  border-bottom: 0.5px solid var(--color-border-tertiary);
+  justify-content: space-between;
+  margin-bottom: 8px;
+  gap: 8px;
 }
-.sc-pb-row:last-child {
-  border-bottom: none;
+
+.lb-commentary-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
 }
-.sc-pb-rank {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  min-width: 36px;
+
+.lb-commentary-time {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
 }
-.sc-pb-name {
+
+.lb-commentary-text {
   font-size: 14px;
-  color: var(--color-text-primary);
-  flex: 1;
+  line-height: 1.6;
+  color: #fff;
+  margin: 0;
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
 }
-.sc-pb-score {
-  font-size: 13px;
-  font-weight: 500;
-  min-width: 36px;
-  text-align: right;
+
+.lb-commentary-loading {
+  opacity: 0.5;
+  font-style: italic;
 }
-.sc-pb-score--under { color: 
-#1a7a3f; }
-.sc-pb-score--over  { color: 
-#c0392b; }
-.sc-pb-score--even  { color: var(--color-text-secondary); }
