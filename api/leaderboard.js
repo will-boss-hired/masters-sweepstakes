@@ -19,9 +19,21 @@ export default async function handler(req, res) {
         display: ls.displayValue || '—',
       }))
 
-      // ESPN's c.score.displayValue is the live overall to-par score.
-      // It updates correctly during active rounds across all rounds.
-      const overallScore = c.score?.displayValue || 'E'
+      // Sum the to-par displayValue of each completed/active round linescore.
+      // c.score.displayValue only reflects R1 and doesn't update across rounds.
+      // linescore displayValues (e.g. "-1", "+2", "E") are correct per round.
+      function parseTopar(str) {
+        if (!str || str === '—' || str === 'E' || str === 'Even') return 0
+        const n = parseInt(str.replace('+', ''), 10)
+        return isNaN(n) ? 0 : n
+      }
+
+      const scoringLinescores = linescores.filter(ls => ls.display && ls.display !== '—')
+      let overallScore = 'E'
+      if (scoringLinescores.length > 0) {
+        const total = scoringLinescores.reduce((sum, ls) => sum + parseTopar(ls.display), 0)
+        overallScore = total === 0 ? 'E' : total > 0 ? `+${total}` : String(total)
+      }
 
       return {
         id: c.athlete?.id,
